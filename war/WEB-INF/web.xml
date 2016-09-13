@@ -4,6 +4,15 @@ xmlns="http://java.sun.com/xml/ns/javaee"
 xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+    <filter>
+        <filter-name>userAcconutFilter</filter-name>
+        <filter-class>com.zgd.UserAcconutFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>userAcconutFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping> 
 	<servlet>
 		<servlet-name>SavePiaData</servlet-name>
 		<servlet-class>com.zgd.SavePiaData</servlet-class>

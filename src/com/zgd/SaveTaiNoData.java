@@ -18,29 +18,35 @@ public class SaveTaiNoData extends HttpServlet {
 
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		String taiNo = req.getParameter("taiNo");
-		String groupName = req.getParameter("groupName");
+		String[] strList = taiNo.split(",");
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-
-		int taiNos = CommonUtil.ObejctToInt(taiNo);
-		try{
-			List<Entity> employees = new ArrayList<Entity>();
-			for(int i = 0 ;i < 7;i++){
-
-				Entity employee = new Entity("TAI_NO");
-				employee.setProperty("taiNo", CommonUtil.ObejctToString(taiNos + i));
-				employee.setProperty("groupName", CommonUtil.ObejctToString(groupName));
-				employees.add(employee);
+		String reslut = "";
+		if (strList.length == 3){
+			int taiNos = CommonUtil.ObejctToInt(strList[0]);
+			String groupNames = CommonUtil.ObejctToString(strList[1]);
+			int index = CommonUtil.ObejctToInt(strList[2]);
+			try{
+				List<Entity> employees = new ArrayList<Entity>();
 				
-			}
-			datastore.put(employees);
+				for(int i = 0 ;i < index;i++){
 
-		} catch (Exception e) {
-			
-		} finally {
-		
-		}
-		resp.setContentType("text/html; charset=UTF-8");
-		resp.getWriter().println("OK");
+					Entity employee = new Entity("TAI_NO");
+					employee.setProperty("taiNo", CommonUtil.ObejctToString(taiNos + i));
+					employee.setProperty("groupName", groupNames);
+					employees.add(employee);
+					reslut += (taiNos + ",");
+				}
+				datastore.put(employees);
+
+			} catch (Exception e) {
+				
+			} 
+			resp.setContentType("text/html; charset=UTF-8");
+			resp.getWriter().println("OK:" + reslut);
+		}else{
+			resp.setContentType("text/html; charset=UTF-8");
+			resp.getWriter().println("taiNo,groupName,index");
+		}	
 	}
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		doPost(req,resp);

@@ -32,7 +32,15 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-name>GetPiaDataForChart</servlet-name>
 		<servlet-class>com.zgd.GetPiaDataForChart</servlet-class>
 	</servlet>
-		<servlet-mapping>
+	<servlet>
+		<servlet-name>PiaDataDownload</servlet-name>
+		<servlet-class>com.zgd.PiaDataDownload</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PiaDataDownload</servlet-name>
+		<url-pattern>/PiaDataDownload</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
 		<servlet-name>GetPiaDataForChart</servlet-name>
 		<url-pattern>/GetPiaDataForChart</url-pattern>
 	</servlet-mapping>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns="http://java.sun.com/xml/ns/javaee"
+xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+	<servlet>
+		<servlet-name>SavePiaData</servlet-name>
+		<servlet-class>com.zgd.SavePiaData</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>GetPiaData</servlet-name>
+		<servlet-class>com.zgd.GetPiaData</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>SaveTaiNoData</servlet-name>
+		<servlet-class>com.zgd.SaveTaiNoData</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>DeletePiaData</servlet-name>
+		<servlet-class>com.zgd.DeletePiaData</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>GetTaiNoList</servlet-name>
+		<servlet-class>com.zgd.GetTaiNoList</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>UpdatePiaData</servlet-name>
+		<servlet-class>com.zgd.UpdatePiaData</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>GetPiaDataForChart</servlet-name>
+		<servlet-class>com.zgd.GetPiaDataForChart</servlet-class>
+	</servlet>
+		<servlet-mapping>
+		<servlet-name>GetPiaDataForChart</servlet-name>
+		<url-pattern>/GetPiaDataForChart</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>GetPiaData</servlet-name>
+		<url-pattern>/GetPiaData</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SavePiaData</servlet-name>
+		<url-pattern>/SavePiaData</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>DeletePiaData</servlet-name>
+		<url-pattern>/DeletePiaData</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>GetTaiNoList</servlet-name>
+		<url-pattern>/GetTaiNoList</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UpdatePiaData</servlet-name>
+		<url-pattern>/UpdatePiaData</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SaveTaiNoData</servlet-name>
+		<url-pattern>/SaveTaiNoData</url-pattern>
+	</servlet-mapping>
+	<welcome-file-list>
+		<welcome-file>vboxmain.html</welcome-file>
+	</welcome-file-list>
+</web-app>

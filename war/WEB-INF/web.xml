@@ -36,9 +36,17 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-name>PiaDataDownload</servlet-name>
 		<servlet-class>com.zgd.PiaDataDownload</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>SendMailOfPiaData</servlet-name>
+		<servlet-class>com.zgd.SendMailOfPiaData</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>PiaDataDownload</servlet-name>
 		<url-pattern>/PiaDataDownload</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SendMailOfPiaData</servlet-name>
+		<url-pattern>/SendMailOfPiaData</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>GetPiaDataForChart</servlet-name>

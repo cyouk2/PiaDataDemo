@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cronentries>
+  <cron>
+    <url>/SendMailOfPiaData</url>
+    <description>Send Mail Of PiaData</description>
+    <schedule>every 48 hours</schedule>
+  </cron>
+</cronentries>

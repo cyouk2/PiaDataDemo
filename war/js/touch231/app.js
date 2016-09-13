@@ -77,7 +77,7 @@ Ext.application({
 	},
 	
 	getItemTpl : function(){
-		return ['<div style="font-size:9px;">日付 :<span style="color:#000099">{playDate}</span><br/>',
+		return ['<div style="font-size:12px;">日付 :<span style="color:#000099">{playDate}</span><br/>',
 		 '当たり ：<span style="color:##006600">{bonusCount}</span><br/>',
 		 '確率 ：<span style="color:#ff0066">{rate}</span><br/>',
 		 '出玉 ：<span style="color: #660066">{ballOutput}</span></div>'].join("");
@@ -298,25 +298,6 @@ Ext.application({
 					});
 				}
 			});
-		//台番
-		var taiNoSelectField2 = Ext.create('Ext.field.Select', {
-				label : '台番',
-				valueField : 'taiNo',
-				displayField : 'taiNo',
-				store : taiNoStore
-			});
-		// 検索ボタン
-		var searchButton2 = Ext.create('Ext.Button', {
-				text : '検索',
-				ui : 'action',
-				handler : function () {
-					storeChart.load({
-						params : {
-							taiNo : taiNoSelectField2.getValue()
-						}
-					});
-				}
-			});
 		// chartpanelのstore
 		var storeChart = Ext.create("Ext.data.Store", {
 				model : "piaDataModel",
@@ -335,15 +316,7 @@ Ext.application({
 				title : 'Chart',
 				iconCls : 'star',
 				layout : 'fit',
-				items : [ {
-					xtype : 'toolbar',
-					docked : 'top',
-					scrollable : {
-						direction : 'horizontal',
-						directionLock : true
-					},
-					items : [taiNoSelectField2, searchButton2]
-					},{
+				items : [{
 						xtype : 'chart',
 						background : "none",
 						store : storeChart,
@@ -519,6 +492,12 @@ Ext.application({
 				title : 'home',
 				iconCls : 'home',
 				layout : 'fit',
+				items : [list]
+			});
+		// ################################   TabPanel     Start   ########################
+		var tabpanels = Ext.create('Ext.TabPanel', {
+				xtype : 'tabpanel',
+				tabBarPosition : 'bottom',
 				items : [ {
 					xtype : 'toolbar',
 					docked : 'top',
@@ -527,13 +506,7 @@ Ext.application({
 						directionLock : true
 					},
 					items : [taiNoSelectField, searchButton]
-				},list]
-			});
-		// ################################   TabPanel     Start   ########################
-		var tabpanels = Ext.create('Ext.TabPanel', {
-				xtype : 'tabpanel',
-				tabBarPosition : 'bottom',
-				items : [listpanel, chartpanel, formPanel]
+				},listpanel, chartpanel, formPanel]
 			});
 
 		Ext.Viewport.add(tabpanels);

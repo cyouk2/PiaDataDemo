@@ -427,6 +427,28 @@ Ext.application({
 							}, {
 								type : 'line',
 								xField : 'playDateN',
+								yField : 'ballOutputN',
+								title : '出玉line',
+								style : {
+									stroke : '#00a3cc',
+									lineWidth : 2
+								},
+								highlightCfg : {
+									scale : 2
+								},
+								marker : {
+									type : 'circle',
+									stroke : '#black',
+									fill : '#e6e600',
+									lineWidth : 1,
+									radius : 2,
+									fx : {
+										duration : 300
+									}
+								}
+							}, {
+								type : 'line',
+								xField : 'playDateN',
 								yField : 'outMax',
 								title : '差玉MAX',
 								style : {

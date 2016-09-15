@@ -77,10 +77,10 @@ Ext.application({
 	},
 	
 	getItemTpl : function(){
-		return ['<div style="font-size:12px;">日付 :<span style="color:#000099">{playDate}</span><br/>',
-		 '当たり ：<span style="color:##006600">{bonusCount}</span><br/>',
-		 '確率 ：<span style="color:#ff0066">{rate}</span><br/>',
-		 '出玉 ：<span style="color: #660066">{ballOutput}</span></div>'].join("");
+		return ['<div><span style="color:#000099";font-size:15px;>{playDate}</span><br/>',
+		 '<span style="color:#006600;font-size:x-small;width: 100px;display: inline-block;">当たり ：{bonusCount}</span>',
+		 '<span style="color:#ff0066;font-size:x-small;width: 100px;display: inline-block;">確率 ：{rate}</span>',
+		 '<span style="color: #660066;font-size:x-small;width: 100px;display: inline-block;">出玉 ：{ballOutput}</span></div>'].join("");
 	}, 
 	// launch
 	launch : function () {

@@ -207,7 +207,7 @@ Ext.application({
 				}
 			});
 		var formPanel = Ext.create('Ext.form.Panel', {
-				title : 'Contact',
+				title : 'EDIT',
 				iconCls : 'user',
 				items : [{
 						xtype : 'fieldset',
@@ -313,7 +313,7 @@ Ext.application({
 			});
 		// chartpanel
 		var chartpanel = Ext.create("Ext.Panel", {
-				title : 'Chart',
+				title : 'TAINO',
 				iconCls : 'star',
 				layout : 'fit',
 				items : [{
@@ -475,6 +475,167 @@ Ext.application({
 				]
 			});
 		
+		// ################################   chart2     Start   ########################
+		var storeChartForDate = Ext.create("Ext.data.Store", {
+			model : "piaDataModel",
+			proxy : {
+				type : "ajax",
+				url : "GetPiaDataByDate",
+				reader : {
+					type : "json",
+					rootProperty : "root"
+				}
+			},
+			autoLoad : true
+		});
+		//台番
+		var taiNoSelectField1 = Ext.create('Ext.field.Select', {
+				label : 'DATE',
+				valueField : 'value',
+				displayField : 'text',
+				store : {
+					data : this.getPlayDate()
+				}
+			});
+		// 検索ボタン
+		var searchButton1 = Ext.create('Ext.Button', {
+				text : '検索',
+				ui : 'action',
+				handler : function () {
+					storeChartForDate.load({
+						params : {
+							playDate : taiNoSelectField1.getValue()
+						}
+					});
+				}
+			});
+		// chartpanel
+		var chartpanel2 = Ext.create("Ext.Panel", {
+				title : 'DATE',
+				iconCls : 'settings',
+				layout : 'fit',
+				items : [ {
+					xtype : 'toolbar',
+					docked : 'top',
+					scrollable : {
+						direction : 'horizontal',
+						directionLock : true
+					},
+					items : [taiNoSelectField1, searchButton1]
+				},{
+						xtype : 'chart',
+						background : "none",
+						store : storeChartForDate,
+						animate : true,
+						interactions : ['panzoom', 'itemhighlight'],
+						legend : {
+							position : "bottom"
+						},
+						series : [{
+								type : 'line',
+								xField : 'taiNo',
+								yField : 'rate',
+								title : '確率',
+								style : {
+									stroke : '#e600e6',
+									lineWidth : 2
+								},
+								highlightCfg : {
+									scale : 2
+								},
+								marker : {
+									type : 'circle',
+									stroke : '#0d1f96',
+									fill : '#115fa6',
+									lineWidth : 1,
+									radius : 2,
+									fx : {
+										duration : 300
+									}
+								}
+							}, {
+								type : 'line',
+								xField : 'taiNo',
+								yField : 'rateN',
+								title : '10000/確率',
+								style : {
+									stroke : '#993399',
+									lineWidth : 2
+								},
+								highlightCfg : {
+									scale : 2
+								},
+								marker : {
+									type : 'circle',
+									stroke : '#0d1f96',
+									fill : '#115fa6',
+									lineWidth : 1,
+									radius : 2,
+									fx : {
+										duration : 300
+									}
+								}
+							}, {
+								type : 'line',
+								xField : 'taiNo',
+								yField : 'bonusCountN',
+								title : '当たり',
+								style : {
+									stroke : '#1a1aff',
+									lineWidth : 2
+								},
+								highlightCfg : {
+									scale : 2
+								},
+								marker : {
+									type : 'circle',
+									stroke : '#black',
+									fill : '#a61120',
+									lineWidth : 1,
+									radius : 2,
+									fx : {
+										duration : 300
+									}
+								}
+							}, {
+								type : 'bar',
+								xField : 'taiNo',
+								yField : ['ballOutputN'],
+								title : ['出玉'],
+								style : {
+									maxBarWidth : 3,
+									lineWidth : 1,
+									fill : "#00001a",
+									stroke : '#00001a'
+								}
+							}
+						],
+						axes : [{
+								type : 'numeric',
+								position : 'left',
+								grid : {
+									odd : {
+										fill : '#fafafa'
+									}
+								},
+								style : {
+									axisLine : true,
+									estStepSize : 25,
+									stroke : '#ddd'
+								}
+							}, {
+								type : 'category',
+								position : 'bottom',
+								style : {
+									estStepSize : 1,
+									stroke : '#999'
+								}
+							}
+						]
+					}
+
+				]
+			});
 		// ################################   List     Start   ########################
 		var list = Ext.create('Ext.List', {
 				itemTpl : this.getItemTpl(),
@@ -489,15 +650,9 @@ Ext.application({
 			});
 
 		var listpanel = Ext.create("Ext.Panel", {
-				title : 'home',
+				title : 'LIST',
 				iconCls : 'home',
 				layout : 'fit',
-				items : [list]
-			});
-		// ################################   TabPanel     Start   ########################
-		var tabpanels = Ext.create('Ext.TabPanel', {
-				xtype : 'tabpanel',
-				tabBarPosition : 'bottom',
 				items : [ {
 					xtype : 'toolbar',
 					docked : 'top',
@@ -506,7 +661,13 @@ Ext.application({
 						directionLock : true
 					},
 					items : [taiNoSelectField, searchButton]
-				},listpanel, chartpanel, formPanel]
+				},list]
+			});
+		// ################################   TabPanel     Start   ########################
+		var tabpanels = Ext.create('Ext.TabPanel', {
+				xtype : 'tabpanel',
+				tabBarPosition : 'bottom',
+				items : [listpanel, chartpanel,chartpanel2, formPanel]
 			});
 
 		Ext.Viewport.add(tabpanels);

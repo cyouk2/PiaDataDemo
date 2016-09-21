@@ -650,11 +650,11 @@ Ext.application({
 			listeners : {
 				selectionchange : function (selection, records, eOpts) {
 					tabpanels.setActiveItem(3);
-					var taiNo =  records[0].data.taiNo;
-					taiNoSelectField.setValue(taiNo);
+					var intTaiNo =  records[0].data.taiNo;
+					taiNoSelectField.setValue(intTaiNo);
 					storeChart.load({
 						params : {
-							taiNo : taiNoSelectField.getValue()
+							taiNo : intTaiNo
 						}
 					});
 				}

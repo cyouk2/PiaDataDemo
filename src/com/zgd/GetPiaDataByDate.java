@@ -27,10 +27,11 @@ import com.zgd.common.CommonUtil;
 
 @SuppressWarnings("serial")
 public class GetPiaDataByDate extends HttpServlet {
-	
+
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		String playDate = req.getParameter("playDate");
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+
 		if (!CommonUtil.IsNullOrEmpty(playDate)) {
 			list = getTallestPeople(playDate);
 		}
@@ -40,24 +41,22 @@ public class GetPiaDataByDate extends HttpServlet {
 		re.setMsg("");
 		re.setRoot(list);
 		resp.setContentType("text/plain");
-		resp.getWriter().println( gson.toJson(re));
+		resp.getWriter().println(gson.toJson(re));
 	}
-	
+
 	public static List<Map<String, Object>> getTallestPeople(String playDate) {
 
-		List<Map<String, Object>> listMap = new ArrayList<Map<String, Object>>();
-
-		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-		
 		List<Filter> list = new ArrayList<Filter>();
-		
 		list.add(new FilterPredicate("playDate", FilterOperator.EQUAL, playDate));
 		list.add(new FilterPredicate("taiNo", FilterOperator.GREATER_THAN_OR_EQUAL, "557"));
 		list.add(new FilterPredicate("taiNo", FilterOperator.LESS_THAN_OR_EQUAL, "584"));
 		CompositeFilter filter = new CompositeFilter(CompositeFilterOperator.AND, list);
 		Query q = new Query("PIA_DATA").setFilter(filter).addSort("taiNo", SortDirection.ASCENDING);
+
+		List<Map<String, Object>> listMap = new ArrayList<Map<String, Object>>();
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		PreparedQuery pq = datastore.prepare(q);
-		
+
 		for (Entity en : pq.asIterable()) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.putAll(ConvertListOfEntity(en.getProperties()));
@@ -65,32 +64,33 @@ public class GetPiaDataByDate extends HttpServlet {
 		}
 		return listMap;
 	}
-	
+
 	public static Map<String, Object> ConvertListOfEntity(Map<String, Object> map) {
 
 		Map<String, Object> listMap = new HashMap<String, Object>();
 		listMap.putAll(map);
+
 		int bonusCount = CommonUtil.ObejctToInt(map.get("bonusCount"));
 		int ballInput = CommonUtil.ObejctToInt(map.get("ballInput"));
 		int ballOutput = CommonUtil.ObejctToInt(map.get("ballOutput"));
 		int rate = CommonUtil.ObejctToInt(map.get("rate"));
-		String playDate =CommonUtil.ObejctToString(map.get("playDate"));
-		if (rate == 0){
-			listMap.put("rateN", 0);
-		
-		}else {
-			listMap.put("rateN", (int)(10000 / rate));
-		}
+		String playDate = CommonUtil.ObejctToString(map.get("playDate"));
 
 		listMap.put("bonusCountN", bonusCount * 10);
 		listMap.put("ballInputN", ballInput / 10);
 		listMap.put("ballOutputN", ballOutput / 100);
 		listMap.put("playDateN", playDate.substring(4));
 
+		if (rate == 0) {
+			listMap.put("rateN", 0);
+
+		} else {
+			listMap.put("rateN", (int) (10000 / rate));
+		}
+
 		return listMap;
 	}
-	
-	
+
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		doGet(req, resp);
 	}

@@ -88,12 +88,16 @@ Ext.application({
 		return dataOfPlayDate;
 	},
 	
+	getItemTplForBall : function(){
+		return ['<div><span style="color:#000099";font-size:15px;>{taiNo}</span><br/>',
+		 '<span style="color: #660066;font-size:x-small;width: 120px;display: inline-block;">差玉 ：{outTotal}</span></div>'].join("");
+	}, 
 	getItemTpl : function(){
 		return ['<div><span style="color:#000099";font-size:15px;>{playDate}</span><br/>',
-		 '<span style="color:#006600;font-size:x-small;width: 70px;display: inline-block;">当たり ：{bonusCount}</span>',
-		 '<span style="color:#ff0066;font-size:x-small;width: 70px;display: inline-block;">確率 ：{rate}</span>',
-		 '<span style="color: #660066;font-size:x-small;width: 70px;display: inline-block;">出玉 ：{ballOutput}</span></div>'].join("");
-	}, 
+				 '<span style="color:#006600;font-size:x-small;width: 70px;display: inline-block;">当たり ：{bonusCount}</span>',
+				 '<span style="color:#ff0066;font-size:x-small;width: 70px;display: inline-block;">確率 ：{rate}</span>',
+				 '<span style="color: #660066;font-size:x-small;width: 70px;display: inline-block;">出玉 ：{ballOutput}</span></div>'].join("");
+	},
 	// launch
 	launch : function () {
 
@@ -219,7 +223,7 @@ Ext.application({
 				}
 			});
 		var formPanel = Ext.create('Ext.form.Panel', {
-				title : 'EDIT',
+				title : '編集',
 				iconCls : 'user',
 				items : [{
 						xtype : 'fieldset',
@@ -325,7 +329,7 @@ Ext.application({
 			});
 		// chartpanel
 		var chartpanel = Ext.create("Ext.Panel", {
-				title : 'TAINO',
+				title : '図日別',
 				iconCls : 'star',
 				layout : 'fit',
 				items : [{
@@ -523,7 +527,7 @@ Ext.application({
 			});
 		// chartpanel
 		var chartpanel2 = Ext.create("Ext.Panel", {
-				title : 'DATE',
+				title : '図台別',
 				iconCls : 'settings',
 				layout : 'fit',
 				items : [ {
@@ -587,6 +591,17 @@ Ext.application({
 									fill : "#00001a",
 									stroke : '#00001a'
 								}
+							},{
+								type : 'bar',
+								xField : 'taiNo',
+								yField : ['totalOut'],
+								title : ['差玉'],
+								style : {
+									maxBarWidth : 3,
+									lineWidth : 1,
+									fill : "#006600",
+									stroke : '#006600'
+								}
 							}
 						],
 						axes : [{
@@ -628,57 +643,28 @@ Ext.application({
 			},
 			autoLoad : true
 		});
-		var chartpanel3 = Ext.create("Ext.Panel", {
-			title : '差玉',
+		
+		var list2 = Ext.create('Ext.List', {
+			itemTpl : this.getItemTplForBall(),
+			store : storeChartForDate2,
+			listeners : {
+				selectionchange : function (selection, records, eOpts) {
+					tabpanels.setActiveItem(3);
+					var taiNo =  records[0].data.taiNo;
+					taiNoSelectField.setValue(taiNo);
+					storeChart.load({
+						params : {
+							taiNo : taiNoSelectField.getValue()
+						}
+					});
+				}
+			}
+		});
+		var listpanel2 = Ext.create("Ext.Panel", {
+			title : '差玉台別',
 			iconCls : 'info',
 			layout : 'fit',
-			items : [{
-					xtype : 'chart',
-					background : "none",
-					store : storeChartForDate2,
-					animate : true,
-					interactions : ['panzoom', 'itemhighlight'],
-					legend : {
-						position : "bottom"
-					},
-					series : [{
-							type : 'bar',
-							xField : 'taiNo',
-							yField : ['outTotal'],
-							title : ['差玉'],
-							style : {
-								maxBarWidth : 3,
-								lineWidth : 1,
-								fill : "#e600e6",
-								stroke : '#e600e6'
-							}
-						}
-					],
-					axes : [{
-							type : 'numeric',
-							position : 'left',
-							grid : {
-								odd : {
-									fill : '#fafafa'
-								}
-							},
-							style : {
-								axisLine : true,
-								estStepSize : 25,
-								stroke : '#ddd'
-							}
-						}, {
-							type : 'category',
-							position : 'bottom',
-							style : {
-								estStepSize : 1,
-								stroke : '#999'
-							}
-						}
-					]
-				}
-
-			]
+			items : [list2]
 		});
 		// ################################   List     Start   ########################
 		var list = Ext.create('Ext.List', {
@@ -686,7 +672,7 @@ Ext.application({
 				store : storeChart,
 				listeners : {
 					selectionchange : function (selection, records, eOpts) {
-						tabpanels.setActiveItem(2);
+						tabpanels.setActiveItem(1);
 						var piadataInfo = Ext.create('piaDataModel', records[0].data);
 						formPanel.setRecord(piadataInfo);
 					}
@@ -694,7 +680,7 @@ Ext.application({
 			});
 
 		var listpanel = Ext.create("Ext.Panel", {
-				title : 'LIST',
+				title : '一覧日別',
 				iconCls : 'home',
 				layout : 'fit',
 				items : [ {
@@ -711,7 +697,7 @@ Ext.application({
 		var tabpanels = Ext.create('Ext.TabPanel', {
 				xtype : 'tabpanel',
 				tabBarPosition : 'bottom',
-				items : [listpanel, chartpanel,chartpanel2,chartpanel3, formPanel]
+				items : [listpanel,formPanel,listpanel2, chartpanel,chartpanel2]
 			});
 
 		Ext.Viewport.add(tabpanels);

@@ -2,6 +2,8 @@ package com.zgd;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,9 +17,6 @@ import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
-import com.google.appengine.api.datastore.Query.CompositeFilter;
-import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
-import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.google.appengine.api.datastore.Query.SortDirection;
@@ -40,23 +39,24 @@ public class GetPiaBallsOfDay extends HttpServlet {
 	}
 
 	public static List<Map<String, Object>> getTallestPeople() {
-
-		List<Filter> list = new ArrayList<Filter>();
-		list.add(new FilterPredicate("taiNo", FilterOperator.GREATER_THAN_OR_EQUAL, "557"));
-		list.add(new FilterPredicate("taiNo", FilterOperator.LESS_THAN_OR_EQUAL, "584"));
-		CompositeFilter filter = new CompositeFilter(CompositeFilterOperator.AND, list);
-		Query q = new Query("PIA_DATA").addSort("taiNo", SortDirection.ASCENDING).setFilter(filter);
+		String tainoKey = "557";
+		List<String> etiqueta = new ArrayList<String>();
+		for (int i = 557; i <= 584; i++) {
+			etiqueta.add(CommonUtil.ObejctToString(i));
+		}
+		Query q = new Query("PIA_DATA").addSort("taiNo", SortDirection.ASCENDING)
+				.setFilter(new FilterPredicate("taiNo", FilterOperator.IN, etiqueta));
 
 		List<Map<String, Object>> listMap = new ArrayList<Map<String, Object>>();
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		PreparedQuery pq = datastore.prepare(q);
-		String tainoKey = "557";
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		int outTotal = 0;
 		for (Entity en : pq.asIterable()) {
-			
+
 			String tai = CommonUtil.ObejctToString(en.getProperty("taiNo"));
-			if (!tai.equals(tainoKey)){
+			if (!tai.equals(tainoKey)) {
 				map.put("taiNo", tainoKey);
 				map.put("outTotal", outTotal);
 				listMap.add(map);
@@ -66,9 +66,29 @@ public class GetPiaBallsOfDay extends HttpServlet {
 			}
 			outTotal += CommonUtil.ObejctToInt(en.getProperty("ballOutput"));
 		}
+		Comparator<Map<String, Object>> mapComparator = new Comparator<Map<String, Object>>() {
+			public int compare(Map<String, Object> m1, Map<String, Object> m2) {
+				int no1 = CommonUtil.ObejctToInt(m1.get("outTotal"));
+				int no2 = CommonUtil.ObejctToInt(m2.get("outTotal"));
+
+				if (no1 > no2) {
+					return 1;
+
+				} else if (no1 == no2) {
+					return 0;
+
+				} else {
+					return -1;
+
+				}
+			}
+		};
+		Collections.sort(listMap, mapComparator);
 		return listMap;
 	}
+
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		doGet(req, resp);
 	}
+
 }

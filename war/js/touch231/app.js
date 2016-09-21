@@ -8,7 +8,19 @@ Ext.define('taiNoModel', {
 		]
 	}
 });
-
+Ext.define('outTotalModel', {
+	extend : 'Ext.data.Model',
+	config : {
+		fields : [{
+				name : 'taiNo',
+				type : 'string'
+			},{
+				name : 'outTotal',
+				type : 'integer'
+			}
+		]
+	}
+});
 Ext.define('piaDataModel', {
 	extend : 'Ext.data.Model',
 	config : {
@@ -532,70 +544,37 @@ Ext.application({
 							position : "bottom"
 						},
 						series : [{
-								type : 'line',
+								type : 'bar',
 								xField : 'taiNo',
-								yField : 'rate',
-								title : '確率',
+								yField : ['rate'],
+								title : ['確率'],
 								style : {
-									stroke : '#e600e6',
-									lineWidth : 2
-								},
-								highlightCfg : {
-									scale : 2
-								},
-								marker : {
-									type : 'circle',
-									stroke : '#0d1f96',
-									fill : '#115fa6',
+									maxBarWidth : 3,
 									lineWidth : 1,
-									radius : 2,
-									fx : {
-										duration : 300
-									}
+									fill : "#e600e6",
+									stroke : '#e600e6'
 								}
 							}, {
-								type : 'line',
+								type : 'bar',
 								xField : 'taiNo',
-								yField : 'rateN',
-								title : '10000/確率',
+								yField : ['rateN'],
+								title : ['10000/確率'],
 								style : {
-									stroke : '#993399',
-									lineWidth : 2
-								},
-								highlightCfg : {
-									scale : 2
-								},
-								marker : {
-									type : 'circle',
-									stroke : '#0d1f96',
-									fill : '#115fa6',
+									maxBarWidth : 3,
 									lineWidth : 1,
-									radius : 2,
-									fx : {
-										duration : 300
-									}
+									fill : "#993399",
+									stroke : '#993399'
 								}
 							}, {
-								type : 'line',
+								type : 'bar',
 								xField : 'taiNo',
-								yField : 'bonusCountN',
-								title : '当たり',
+								yField : ['bonusCountN'],
+								title : ['当たり'],
 								style : {
-									stroke : '#1a1aff',
-									lineWidth : 2
-								},
-								highlightCfg : {
-									scale : 2
-								},
-								marker : {
-									type : 'circle',
-									stroke : '#black',
-									fill : '#a61120',
+									maxBarWidth : 3,
 									lineWidth : 1,
-									radius : 2,
-									fx : {
-										duration : 300
-									}
+									fill : "#1a1aff",
+									stroke : '#1a1aff'
 								}
 							}, {
 								type : 'bar',
@@ -636,6 +615,71 @@ Ext.application({
 
 				]
 			});
+		// ################################   chart3     Start   ########################
+		var storeChartForDate2 = Ext.create("Ext.data.Store", {
+			model : "outTotalModel",
+			proxy : {
+				type : "ajax",
+				url : "GetPiaBallsOfDay",
+				reader : {
+					type : "json",
+					rootProperty : "root"
+				}
+			},
+			autoLoad : true
+		});
+		var chartpanel3 = Ext.create("Ext.Panel", {
+			title : '差玉',
+			iconCls : 'info',
+			layout : 'fit',
+			items : [{
+					xtype : 'chart',
+					background : "none",
+					store : storeChartForDate2,
+					animate : true,
+					interactions : ['panzoom', 'itemhighlight'],
+					legend : {
+						position : "bottom"
+					},
+					series : [{
+							type : 'bar',
+							xField : 'taiNo',
+							yField : ['outTotal'],
+							title : ['差玉'],
+							style : {
+								maxBarWidth : 3,
+								lineWidth : 1,
+								fill : "#e600e6",
+								stroke : '#e600e6'
+							}
+						}
+					],
+					axes : [{
+							type : 'numeric',
+							position : 'left',
+							grid : {
+								odd : {
+									fill : '#fafafa'
+								}
+							},
+							style : {
+								axisLine : true,
+								estStepSize : 25,
+								stroke : '#ddd'
+							}
+						}, {
+							type : 'category',
+							position : 'bottom',
+							style : {
+								estStepSize : 1,
+								stroke : '#999'
+							}
+						}
+					]
+				}
+
+			]
+		});
 		// ################################   List     Start   ########################
 		var list = Ext.create('Ext.List', {
 				itemTpl : this.getItemTpl(),
@@ -667,7 +711,7 @@ Ext.application({
 		var tabpanels = Ext.create('Ext.TabPanel', {
 				xtype : 'tabpanel',
 				tabBarPosition : 'bottom',
-				items : [listpanel, chartpanel,chartpanel2, formPanel]
+				items : [listpanel, chartpanel,chartpanel2,chartpanel3, formPanel]
 			});
 
 		Ext.Viewport.add(tabpanels);

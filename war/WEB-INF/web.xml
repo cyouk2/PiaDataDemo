@@ -9,6 +9,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-class>com.zgd.GetPiaDataByDate</servlet-class>
 	</servlet>
 	<servlet>
+		<servlet-name>GetPiaBallsOfDay</servlet-name>
+		<servlet-class>com.zgd.GetPiaBallsOfDay</servlet-class>
+	</servlet>
+	<servlet>
 		<servlet-name>SavePiaData</servlet-name>
 		<servlet-class>com.zgd.SavePiaData</servlet-class>
 	</servlet>
@@ -47,6 +51,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<servlet-mapping>
 		<servlet-name>PiaDataDownload</servlet-name>
 		<url-pattern>/PiaDataDownload</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>GetPiaBallsOfDay</servlet-name>
+		<url-pattern>/GetPiaBallsOfDay</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>SendMailOfPiaData</servlet-name>

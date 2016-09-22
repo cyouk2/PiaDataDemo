@@ -27,8 +27,6 @@ import com.zgd.common.CommonUtil;
 
 @SuppressWarnings("serial")
 public class GetPiaDataByDate extends HttpServlet {
-	// private static final Logger log =
-	// Logger.getLogger(GetPiaDataByDate.class.getName());
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		String playDate = req.getParameter("playDate");
@@ -79,13 +77,12 @@ public class GetPiaDataByDate extends HttpServlet {
 
 		Map<String, Object> listMap = new HashMap<String, Object>();
 		listMap.putAll(map);
-
 		int bonusCount = CommonUtil.ObejctToInt(map.get("bonusCount"));
 		int ballInput = CommonUtil.ObejctToInt(map.get("ballInput"));
 		int ballOutput = CommonUtil.ObejctToInt(map.get("ballOutput"));
 		int rate = CommonUtil.ObejctToInt(map.get("rate"));
 		String playDate = CommonUtil.ObejctToString(map.get("playDate"));
-
+		
 		listMap.put("bonusCountN", bonusCount * 10);
 		listMap.put("ballInputN", ballInput / 10);
 		listMap.put("ballOutputN", ballOutput / 100);
@@ -93,17 +90,14 @@ public class GetPiaDataByDate extends HttpServlet {
 
 		if (rate == 0) {
 			listMap.put("rateN", 0);
-
 		} else {
 			listMap.put("rateN", (int) (10000 / rate));
 		}
-
 		return listMap;
 	}
 
 	public static List<Map<String, Object>> getPiaBallsOfDay(String playDate) {
-		String tainoKey = "557";
-
+		
 		List<Filter> list = new ArrayList<Filter>();
 		List<String> etiqueta = new ArrayList<String>();
 		for (int i = 557; i <= 584; i++) {
@@ -114,14 +108,16 @@ public class GetPiaDataByDate extends HttpServlet {
 		CompositeFilter filter = new CompositeFilter(CompositeFilterOperator.AND, list);
 		Query q = new Query("PIA_DATA").addSort("taiNo", SortDirection.ASCENDING).setFilter(filter);
 
-		List<Map<String, Object>> listMap = new ArrayList<Map<String, Object>>();
+
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		PreparedQuery pq = datastore.prepare(q);
-
+		
+		List<Map<String, Object>> listMap = new ArrayList<Map<String, Object>>();
 		Map<String, Object> map = new HashMap<String, Object>();
 		int outTotal = 0;
+		String tainoKey = "557";
+		
 		for (Entity en : pq.asIterable()) {
-
 			String tai = CommonUtil.ObejctToString(en.getProperty("taiNo"));
 			if (!tai.equals(tainoKey)) {
 				map.put("taiNo", tainoKey);
@@ -132,6 +128,12 @@ public class GetPiaDataByDate extends HttpServlet {
 				outTotal = 0;
 			}
 			outTotal += CommonUtil.ObejctToInt(en.getProperty("ballOutput"));
+		}
+		if (tainoKey.equals("584")){
+			map = new HashMap<String, Object>();
+			map.put("taiNo", "584");
+			map.put("outTotal", outTotal);
+			listMap.add(map);
 		}
 		return listMap;
 	}

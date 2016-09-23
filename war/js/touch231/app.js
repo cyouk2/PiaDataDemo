@@ -104,10 +104,12 @@ Ext.application({
 		return ['<div>',
 		        '<span style="color:#000099";font-size:15px;>{taiNo}</span><br/>',
 		        '<span style="color:#006600;font-size:x-small;width: 120px;display: inline-block;">差玉 ：{outTotal}</span><br/>',
+		        '<span style="color:#000099;font-size:x-small;width: 50px;display: inline-block;">本日</span>',
 		        '<span style="color:#ff0066;font-size:x-small;width: 70px;display: inline-block;">確率 ：{rate1}</span>',
-		        '<span style="color: #660066;font-size:x-small;width: 120px;display: inline-block;">出玉 ：{ballOutput1}</span><br/>',
+		        '<span style="color:#660066;font-size:x-small;width: 120px;display: inline-block;">出玉 ：{ballOutput1}</span><br/>',
+		        '<span style="color:#000099;font-size:x-small;width: 50px;display: inline-block;">前日</span>',
 		        '<span style="color:#ff0066;font-size:x-small;width: 70px;display: inline-block;">確率 ：{rate2}</span>',
-		        '<span style="color: #660066;font-size:x-small;width: 120px;display: inline-block;">出玉 ：{ballOutput2}</span>',
+		        '<span style="color:#660066;font-size:x-small;width: 120px;display: inline-block;">出玉 ：{ballOutput2}</span>',
 		        '</div>'].join("");
 	}, 
 	getItemTpl : function(){

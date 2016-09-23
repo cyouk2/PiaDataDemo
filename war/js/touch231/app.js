@@ -115,7 +115,7 @@ Ext.application({
 		        '<span style="color:#660066;font-size:x-small;width: 120px;display: inline-block;">出玉 ：{ballOutput1}</span><br/>',
 		        '<span style="color:#000099;font-size:x-small;width: 50px;display: inline-block;">前日</span>',
 		        '<span style="color:#ff0066;font-size:x-small;width: 70px;display: inline-block;">確率 ：{rate2}</span>',
-		        '<span style="color:#660066;font-size:x-small;width: 120px;display: inline-block;">出玉 ：{ballOutput2}</span>',
+		        '<span style="color:#660066;font-size:x-small;width: 120px;display: inline-block;">出玉 ：{ballOutput2}</span><br/>',
 		        '<span style="color:#000099;font-size:x-small;width: 50px;display: inline-block;">前前日</span>',
 		        '<span style="color:#ff0066;font-size:x-small;width: 70px;display: inline-block;">確率 ：{rate3}</span>',
 		        '<span style="color:#660066;font-size:x-small;width: 120px;display: inline-block;">出玉 ：{ballOutput3}</span>',

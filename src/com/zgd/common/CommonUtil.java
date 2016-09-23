@@ -46,7 +46,7 @@ public class CommonUtil {
 				String key2 = CommonUtil.ObejctToString(e1.get(key));
 				if (key1.equals(key2)) {
 					for(String i : valueKey){
-						e.put(valueKey + index, e1.get(i));
+						e.put(i + index, e1.get(i));
 					}
 					
 					alist.add(e);

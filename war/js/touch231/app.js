@@ -318,18 +318,16 @@ Ext.application({
 				label : '台番',
 				valueField : 'taiNo',
 				displayField : 'taiNo',
-				store : taiNoStore
-			});
-		// 検索ボタン
-		var searchButton = Ext.create('Ext.Button', {
-				text : '検索',
-				ui : 'action',
-				handler : function () {
-					storeChart.load({
-						params : {
-							taiNo : taiNoSelectField.getValue()
-						}
-					});
+				store : taiNoStore,
+				listeners : {
+					selectionchange : function (selection, records, eOpts) {
+						var intTaiNo =  records[0].data.taiNo;
+						storeChart.load({
+							params : {
+								taiNo : intTaiNo
+							}
+						});
+					}
 				}
 			});
 		// chartpanelのstore
@@ -674,7 +672,7 @@ Ext.application({
 			store : storeChartForDate2,
 			listeners : {
 				selectionchange : function (selection, records, eOpts) {
-					tabpanels.setActiveItem(3);
+					tabpanels.setActiveItem(0);
 					var intTaiNo =  records[0].data.taiNo;
 					taiNoSelectField.setValue(intTaiNo);
 					storeChart.load({
@@ -723,7 +721,7 @@ Ext.application({
 						direction : 'horizontal',
 						directionLock : true
 					},
-					items : [taiNoSelectField, searchButton]
+					items : [taiNoSelectField]
 				},list]
 			});
 		// ################################   TabPanel     Start   ########################

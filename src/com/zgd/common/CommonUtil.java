@@ -37,15 +37,18 @@ public class CommonUtil {
 	}
 
 	public static List<Map<String, Object>> MergeMap(List<Map<String, Object>> map1, List<Map<String, Object>> map2,
-			String key, String valueKey, String index) {
+			String key, String index, String...valueKey) {
 		List<Map<String, Object>> alist = new ArrayList<Map<String, Object>>();
 		for (Map<String, Object> e : map1) {
 			String key1 = CommonUtil.ObejctToString(e.get(key));
 
-			for (Map<String, Object> e1 : map1) {
-				String key2 = CommonUtil.ObejctToString(e.get(key));
+			for (Map<String, Object> e1 : map2) {
+				String key2 = CommonUtil.ObejctToString(e1.get(key));
 				if (key1.equals(key2)) {
-					e.put(valueKey + index, e1.get(valueKey));
+					for(String i : valueKey){
+						e.put(valueKey + index, e1.get(i));
+					}
+					
 					alist.add(e);
 				}
 			}

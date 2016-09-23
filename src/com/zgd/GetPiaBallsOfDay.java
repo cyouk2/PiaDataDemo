@@ -33,11 +33,14 @@ public class GetPiaBallsOfDay extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		String playDate = req.getParameter("playDate");
 		List<Map<String, Object>> list = getBallOutUntilSomeDay(playDate);
+		List<Map<String, Object>> list1 = GetPiaDataByDate.getTaiInfoByDate(playDate);
+//		List<Map<String, Object>> list2 = GetPiaDataByDate.getTaiInfoByDate(playDate);
+		List<Map<String, Object>> list3 = CommonUtil.MergeMap(list, list1, "taiNo", "1", "rate", "ballOutput");
 		Gson gson = new Gson();
 		ComRootResult re = new ComRootResult();
 		re.setSuccess(true);
 		re.setMsg("");
-		re.setRoot(list);
+		re.setRoot(list3);
 		resp.setContentType("text/plain");
 		resp.getWriter().println(gson.toJson(re));
 	}
@@ -49,25 +52,25 @@ public class GetPiaBallsOfDay extends HttpServlet {
 		for (int i = 557; i <= 584; i++) {
 			etiqueta.add(CommonUtil.ObejctToString(i));
 		}
-		
+
 		List<Filter> list = new ArrayList<Filter>();
-		if (!CommonUtil.IsNullOrEmpty(playDate)){
+		if (!CommonUtil.IsNullOrEmpty(playDate)) {
 			list.add(new FilterPredicate("playDate", FilterOperator.LESS_THAN_OR_EQUAL, playDate));
 		}
 		list.add(new FilterPredicate("taiNo", FilterOperator.IN, etiqueta));
 		// 検索条件設定
 		Query q = new Query("PIA_DATA").addSort("taiNo", SortDirection.ASCENDING);
-		if (list.size() == 1){
+		if (list.size() == 1) {
 			q.setFilter(list.get(0));
-		}else{
+		} else {
 			q.setFilter(new CompositeFilter(CompositeFilterOperator.AND, list));
 		}
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		PreparedQuery pq = datastore.prepare(q);
-		
+
 		List<Map<String, Object>> listMap = new ArrayList<Map<String, Object>>();
 		Map<String, Object> map = new HashMap<String, Object>();
-		
+
 		int outTotal = 0;
 		int outAll = 0;
 		String tainoKey = "557";
@@ -84,9 +87,9 @@ public class GetPiaBallsOfDay extends HttpServlet {
 			int balls = CommonUtil.ObejctToInt(en.getProperty("ballOutput"));
 			outTotal += balls;
 			outAll += balls;
-			
+
 		}
-		if (tainoKey.equals("584")){
+		if (tainoKey.equals("584")) {
 			map = new HashMap<String, Object>();
 			map.put("taiNo", "584");
 			map.put("outTotal", outTotal);
@@ -112,8 +115,8 @@ public class GetPiaBallsOfDay extends HttpServlet {
 		listMap.add(0, map);
 		map = new HashMap<String, Object>();
 		map.put("taiNo", "AVERAGE");
-		map.put("outTotal", (int)(outAll / 28));
-		listMap.add(1,map);
+		map.put("outTotal", (int) (outAll / 28));
+		listMap.add(1, map);
 		return listMap;
 	}
 

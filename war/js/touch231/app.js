@@ -27,6 +27,9 @@ Ext.define('outTotalModel', {
 				name : 'rate3',
 				type : 'integer'
 			},{
+				name : 'rate4',
+				type : 'integer'
+			},{
 				name : 'ballOutput1',
 				type : 'integer'
 			},{
@@ -34,6 +37,9 @@ Ext.define('outTotalModel', {
 				type : 'integer'
 			},{
 				name : 'ballOutput3',
+				type : 'integer'
+			},{
+				name : 'ballOutput4',
 				type : 'integer'
 			}
 		]
@@ -110,6 +116,9 @@ Ext.application({
 		return ['<div>',
 		        '<span style="color:#000099";font-size:15px;>{taiNo}</span><br/>',
 		        '<span style="color:#006600;font-size:x-small;width: 120px;display: inline-block;">差玉 ：{outTotal}</span><br/>',
+		        '<span style="color:#000099;font-size:x-small;width: 50px;display: inline-block;">明日</span>',
+		        '<span style="color:#ff0066;font-size:x-small;width: 70px;display: inline-block;">確率 ：{rate4}</span>',
+		        '<span style="color:#660066;font-size:x-small;width: 120px;display: inline-block;">出玉 ：{ballOutput4}</span><br/>',
 		        '<span style="color:#000099;font-size:x-small;width: 50px;display: inline-block;">本日</span>',
 		        '<span style="color:#ff0066;font-size:x-small;width: 70px;display: inline-block;">確率 ：{rate1}</span>',
 		        '<span style="color:#660066;font-size:x-small;width: 120px;display: inline-block;">出玉 ：{ballOutput1}</span><br/>',

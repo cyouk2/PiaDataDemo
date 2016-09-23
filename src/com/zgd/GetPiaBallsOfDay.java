@@ -38,15 +38,16 @@ public class GetPiaBallsOfDay extends HttpServlet {
 		list.remove(0);
 		list.remove(0);
 		List<Map<String, Object>> list1 = GetPiaDataByDate.getTaiInfoByDate(playDate);
-//		List<Map<String, Object>> list2 = GetPiaDataByDate.getTaiInfoByDate(playDate);
+		List<Map<String, Object>> list2 = GetPiaDataByDate.getTaiInfoByDate(CommonUtil.addDay(playDate, -1));
 		List<Map<String, Object>> list3 = CommonUtil.MergeMap(list, list1, "taiNo", "1", "rate", "ballOutput");
-		list3.add(0, a);
-		list3.add(1, ab);
+		List<Map<String, Object>> list4 = CommonUtil.MergeMap(list3, list2, "taiNo", "2", "rate", "ballOutput");
+		list4.add(0, a);
+		list4.add(1, ab);
 		Gson gson = new Gson();
 		ComRootResult re = new ComRootResult();
 		re.setSuccess(true);
 		re.setMsg("");
-		re.setRoot(list3);
+		re.setRoot(list4);
 		resp.setContentType("text/plain");
 		resp.getWriter().println(gson.toJson(re));
 	}

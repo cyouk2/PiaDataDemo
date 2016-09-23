@@ -322,11 +322,10 @@ Ext.application({
 				displayField : 'taiNo',
 				store : taiNoStore,
 				listeners : {
-					selectionchange : function (selection, records, eOpts) {
-						var intTaiNo =  records[0].data.taiNo;
+					change: function ( selectf, newValue, oldValue, eOpts )  {
 						storeChart.load({
 							params : {
-								taiNo : intTaiNo
+								taiNo : newValue
 							}
 						});
 					}
@@ -529,20 +528,17 @@ Ext.application({
 				displayField : 'text',
 				store : {
 					data : this.getPlayDate()
+				},
+				listeners : {
+					change: function ( selectf, newValue, oldValue, eOpts )  {
+						storeChartForDate.load({
+							params : {
+								playDate : newValue
+							}
+						});
+					}
 				}
 		});
-		// 検索ボタン
-		var searchButton1 = Ext.create('Ext.Button', {
-				text : '検索',
-				ui : 'action',
-				handler : function () {
-					storeChartForDate.load({
-						params : {
-							playDate : taiNoSelectField1.getValue()
-						}
-					});
-				}
-			});
 		// chartpanel
 		var chartpanel2 = Ext.create("Ext.Panel", {
 				title : '図台別',
@@ -555,7 +551,7 @@ Ext.application({
 						direction : 'horizontal',
 						directionLock : true
 					},
-					items : [taiNoSelectField1, searchButton1]
+					items : [taiNoSelectField1]
 				},{
 						xtype : 'chart',
 						background : "none",

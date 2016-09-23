@@ -504,7 +504,7 @@ Ext.application({
 			},
 			autoLoad : true
 		});
-		//台番
+		//日付別
 		var taiNoSelectField1 = Ext.create('Ext.field.Select', {
 				label : 'DATE',
 				valueField : 'value',
@@ -512,7 +512,7 @@ Ext.application({
 				store : {
 					data : this.getPlayDate()
 				}
-			});
+		});
 		// 検索ボタン
 		var searchButton1 = Ext.create('Ext.Button', {
 				text : '検索',
@@ -591,17 +591,6 @@ Ext.application({
 									fill : "#00001a",
 									stroke : '#00001a'
 								}
-							},{
-								type : 'bar',
-								xField : 'taiNo',
-								yField : ['totalOut'],
-								title : ['差玉'],
-								style : {
-									maxBarWidth : 3,
-									lineWidth : 1,
-									fill : "#006600",
-									stroke : '#006600'
-								}
 							}
 						],
 						axes : [{
@@ -631,6 +620,24 @@ Ext.application({
 				]
 			});
 		// ################################   chart3     Start   ########################
+		//日付別
+		var playdateSelectField = Ext.create('Ext.field.Select', {
+				label : 'DATE',
+				valueField : 'value',
+				displayField : 'text',
+				store : {
+					data : this.getPlayDate()
+				},
+				listeners : {
+					change: function ( selectf, newValue, oldValue, eOpts )  {
+						storeChartForDate2.load({
+							params : {
+								playDate : newValue
+							}
+						});
+					}
+				}
+		});
 		var storeChartForDate2 = Ext.create("Ext.data.Store", {
 			model : "outTotalModel",
 			proxy : {
@@ -664,7 +671,15 @@ Ext.application({
 			title : '差玉台別',
 			iconCls : 'info',
 			layout : 'fit',
-			items : [list2]
+			items : [{
+				xtype : 'toolbar',
+				docked : 'top',
+				scrollable : {
+					direction : 'horizontal',
+					directionLock : true
+				},
+				items : [playdateSelectField]
+			},list2]
 		});
 		// ################################   List     Start   ########################
 		var list = Ext.create('Ext.List', {

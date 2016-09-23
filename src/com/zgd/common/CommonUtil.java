@@ -1,5 +1,9 @@
 package com.zgd.common;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 public class CommonUtil {
 
 	public static boolean IsNullOrEmpty(Object obj) {
@@ -31,4 +35,22 @@ public class CommonUtil {
 		}
 		return a;
 	}
+
+	public static List<Map<String, Object>> MergeMap(List<Map<String, Object>> map1, List<Map<String, Object>> map2,
+			String key) {
+		List<Map<String, Object>> alist = new ArrayList<Map<String, Object>>();
+		for (Map<String, Object> e : map1) {
+			String key1 = CommonUtil.ObejctToString(e.get(key));
+
+			for (Map<String, Object> e1 : map1) {
+				String key2 = CommonUtil.ObejctToString(e.get(key));
+				if (key1.equals(key2)) {
+					e.putAll(e1);
+					alist.add(e);
+				}
+			}
+		}
+		return alist;
+	}
+
 }

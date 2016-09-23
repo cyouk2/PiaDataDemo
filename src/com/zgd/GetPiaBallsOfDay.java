@@ -32,7 +32,7 @@ public class GetPiaBallsOfDay extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		String playDate = req.getParameter("playDate");
-		List<Map<String, Object>> list = getTallestPeople(playDate);
+		List<Map<String, Object>> list = getBallOutUntilSomeDay(playDate);
 		Gson gson = new Gson();
 		ComRootResult re = new ComRootResult();
 		re.setSuccess(true);
@@ -42,19 +42,26 @@ public class GetPiaBallsOfDay extends HttpServlet {
 		resp.getWriter().println(gson.toJson(re));
 	}
 
-	public static List<Map<String, Object>> getTallestPeople(String playDate) {
+	public static List<Map<String, Object>> getBallOutUntilSomeDay(String playDate) {
 
+		// 検索条件
 		List<String> etiqueta = new ArrayList<String>();
 		for (int i = 557; i <= 584; i++) {
 			etiqueta.add(CommonUtil.ObejctToString(i));
 		}
 		
 		List<Filter> list = new ArrayList<Filter>();
-		list.add(new FilterPredicate("playDate", FilterOperator.LESS_THAN_OR_EQUAL, playDate));
+		if (!CommonUtil.IsNullOrEmpty(playDate)){
+			list.add(new FilterPredicate("playDate", FilterOperator.LESS_THAN_OR_EQUAL, playDate));
+		}
 		list.add(new FilterPredicate("taiNo", FilterOperator.IN, etiqueta));
-		CompositeFilter filter = new CompositeFilter(CompositeFilterOperator.AND, list);
-		
-		Query q = new Query("PIA_DATA").addSort("taiNo", SortDirection.ASCENDING).setFilter(filter);
+		// 検索条件設定
+		Query q = new Query("PIA_DATA").addSort("taiNo", SortDirection.ASCENDING);
+		if (list.size() == 1){
+			q.setFilter(list.get(0));
+		}else{
+			q.setFilter(new CompositeFilter(CompositeFilterOperator.AND, list));
+		}
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		PreparedQuery pq = datastore.prepare(q);
 		
@@ -62,6 +69,7 @@ public class GetPiaBallsOfDay extends HttpServlet {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		int outTotal = 0;
+		int outAll = 0;
 		String tainoKey = "557";
 		for (Entity en : pq.asIterable()) {
 			String tai = CommonUtil.ObejctToString(en.getProperty("taiNo"));
@@ -73,7 +81,10 @@ public class GetPiaBallsOfDay extends HttpServlet {
 				tainoKey = tai;
 				outTotal = 0;
 			}
-			outTotal += CommonUtil.ObejctToInt(en.getProperty("ballOutput"));
+			int balls = CommonUtil.ObejctToInt(en.getProperty("ballOutput"));
+			outTotal += balls;
+			outAll += balls;
+			
 		}
 		if (tainoKey.equals("584")){
 			map = new HashMap<String, Object>();
@@ -95,6 +106,14 @@ public class GetPiaBallsOfDay extends HttpServlet {
 			}
 		};
 		Collections.sort(listMap, mapComparator);
+		map = new HashMap<String, Object>();
+		map.put("taiNo", "TOTAL");
+		map.put("outTotal", outAll);
+		listMap.add(0, map);
+		map = new HashMap<String, Object>();
+		map.put("taiNo", "AVERAGE");
+		map.put("outTotal", (int)(outAll / 28));
+		listMap.add(1,map);
 		return listMap;
 	}
 

@@ -33,9 +33,15 @@ public class GetPiaBallsOfDay extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		String playDate = req.getParameter("playDate");
 		List<Map<String, Object>> list = getBallOutUntilSomeDay(playDate);
+		Map<String, Object> a = list.get(0);
+		Map<String, Object> ab = list.get(1);
+		list.remove(0);
+		list.remove(0);
 		List<Map<String, Object>> list1 = GetPiaDataByDate.getTaiInfoByDate(playDate);
 //		List<Map<String, Object>> list2 = GetPiaDataByDate.getTaiInfoByDate(playDate);
 		List<Map<String, Object>> list3 = CommonUtil.MergeMap(list, list1, "taiNo", "1", "rate", "ballOutput");
+		list3.add(0, a);
+		list3.add(1, ab);
 		Gson gson = new Gson();
 		ComRootResult re = new ComRootResult();
 		re.setSuccess(true);

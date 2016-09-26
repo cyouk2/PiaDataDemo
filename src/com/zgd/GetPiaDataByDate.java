@@ -34,7 +34,18 @@ public class GetPiaDataByDate extends HttpServlet {
 
 		if (!CommonUtil.IsNullOrEmpty(playDate)) {
 			list = getTaiInfoByDate(playDate);
+			List<Map<String, Object>> list1 = getTaiInfoByDate(CommonUtil.addDay(playDate, -1));
+			List<Map<String, Object>> list2 = getTaiInfoByDate(CommonUtil.addDay(playDate, -2));
+			List<Map<String, Object>> list3 = getTaiInfoByDate(CommonUtil.addDay(playDate, 1));
+			
+			List<Map<String, Object>> list6 = GetPiaBallsOfDay.getBallOutUntilSomeDay(playDate);
+			
+			List<Map<String, Object>> list4 = CommonUtil.MergeMap(list, list1, "taiNo", "1", "rate", "ballOutput");
+			List<Map<String, Object>> list5 = CommonUtil.MergeMap(list4, list2, "taiNo", "2", "rate", "ballOutput");
+			List<Map<String, Object>> list7 = CommonUtil.MergeMap(list5, list3, "taiNo", "3", "rate", "ballOutput");
+			list = CommonUtil.MergeMap(list7, list6, "taiNo", "", "outTotal");
 		}
+
 		Gson gson = new Gson();
 		ComRootResult re = new ComRootResult();
 		re.setSuccess(true);
@@ -46,12 +57,16 @@ public class GetPiaDataByDate extends HttpServlet {
 
 	public static List<Map<String, Object>> getTaiInfoByDate(String playDate) {
 
+		// 検索条件
+		List<String> etiqueta = new ArrayList<String>();
+		for (int i = 557; i <= 584; i++) {
+			etiqueta.add(CommonUtil.ObejctToString(i));
+		}
 		List<Filter> list = new ArrayList<Filter>();
 		list.add(new FilterPredicate("playDate", FilterOperator.EQUAL, playDate));
-		list.add(new FilterPredicate("taiNo", FilterOperator.GREATER_THAN_OR_EQUAL, "557"));
-		list.add(new FilterPredicate("taiNo", FilterOperator.LESS_THAN_OR_EQUAL, "584"));
+		list.add(new FilterPredicate("taiNo", FilterOperator.IN, etiqueta));
 		CompositeFilter filter = new CompositeFilter(CompositeFilterOperator.AND, list);
-		Query q = new Query("PIA_DATA").setFilter(filter).addSort("taiNo", SortDirection.ASCENDING);
+		Query q = new Query("PIA_DATA").setFilter(filter).addSort("ballOutput", SortDirection.ASCENDING);
 
 		List<Map<String, Object>> listMap = new ArrayList<Map<String, Object>>();
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -59,31 +74,8 @@ public class GetPiaDataByDate extends HttpServlet {
 
 		for (Entity en : pq.asIterable()) {
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.putAll(ConvertListOfEntity(en.getProperties()));
+			map.putAll(en.getProperties());
 			listMap.add(map);
-		}
-		return listMap;
-	}
-
-	public static Map<String, Object> ConvertListOfEntity(Map<String, Object> map) {
-
-		Map<String, Object> listMap = new HashMap<String, Object>();
-		listMap.putAll(map);
-		int bonusCount = CommonUtil.ObejctToInt(map.get("bonusCount"));
-		int ballInput = CommonUtil.ObejctToInt(map.get("ballInput"));
-		int ballOutput = CommonUtil.ObejctToInt(map.get("ballOutput"));
-		int rate = CommonUtil.ObejctToInt(map.get("rate"));
-		String playDate = CommonUtil.ObejctToString(map.get("playDate"));
-
-		listMap.put("bonusCountN", bonusCount * 10);
-		listMap.put("ballInputN", ballInput / 10);
-		listMap.put("ballOutputN", ballOutput / 100);
-		listMap.put("playDateN", playDate.substring(4));
-
-		if (rate == 0) {
-			listMap.put("rateN", 0);
-		} else {
-			listMap.put("rateN", (int) (10000 / rate));
 		}
 		return listMap;
 	}

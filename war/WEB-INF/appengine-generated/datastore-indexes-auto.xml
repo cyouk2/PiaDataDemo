@@ -13,5 +13,10 @@
         <property name="playDate" direction="asc"/>
         <property name="taiNo" direction="asc"/>
     </datastore-index>
-
+    
+	<datastore-index kind="PIA_DATA" ancestor="false" source="manual">
+        <property name="playDate" direction="asc"/>
+        <property name="taiNo" direction="asc"/>
+        <property name="ballOutput" direction="asc"/>
+    </datastore-index>
 </datastore-indexes>

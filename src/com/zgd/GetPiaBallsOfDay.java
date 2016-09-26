@@ -123,15 +123,26 @@ public class GetPiaBallsOfDay extends HttpServlet {
 			}
 		};
 		Collections.sort(listMap, mapComparator);
+		int index = 1;
+		List<Map<String, Object>> listMap1 = new ArrayList<Map<String, Object>>();
+		for(Map<String, Object> m : listMap){
+			map = new HashMap<String, Object>();
+			map.putAll(m);
+			map.put("rank",CommonUtil.ObejctToString(index));
+			index ++;
+			listMap1.add(map);
+		}
+		
+		
 		map = new HashMap<String, Object>();
 		map.put("taiNo", "TOTAL");
 		map.put("outTotal", outAll);
-		listMap.add(0, map);
+		listMap1.add(0, map);
 		map = new HashMap<String, Object>();
 		map.put("taiNo", "AVERAGE");
 		map.put("outTotal", (int) (outAll / 28));
-		listMap.add(1, map);
-		return listMap;
+		listMap1.add(1, map);
+		return listMap1;
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {

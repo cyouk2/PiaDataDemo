@@ -66,7 +66,7 @@ public class GetPiaDataByDate extends HttpServlet {
 		list.add(new FilterPredicate("playDate", FilterOperator.EQUAL, playDate));
 		list.add(new FilterPredicate("taiNo", FilterOperator.IN, etiqueta));
 		CompositeFilter filter = new CompositeFilter(CompositeFilterOperator.AND, list);
-		Query q = new Query("PIA_DATA").setFilter(filter).addSort("ballOutput", SortDirection.ASCENDING);
+		Query q = new Query("PIA_DATA").setFilter(filter).addSort("ballOutput", SortDirection.DESCENDING);
 
 		List<Map<String, Object>> listMap = new ArrayList<Map<String, Object>>();
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();

@@ -114,11 +114,11 @@ public class GetPiaBallsOfDay extends HttpServlet {
 				int no1 = CommonUtil.ObejctToInt(m1.get("outTotal"));
 				int no2 = CommonUtil.ObejctToInt(m2.get("outTotal"));
 				if (no1 > no2) {
-					return 1;
+					return -1;
 				} else if (no1 == no2) {
 					return 0;
 				} else {
-					return -1;
+					return 1;
 				}
 			}
 		};

@@ -393,6 +393,7 @@ Ext.application({
 					store : taiNoStore,
 					listeners : {
 						change : function(selectf, newValue, oldValue, eOpts) {
+							taiNoSelectFieldForIChiRan.setValue(newValue);
 							storeChart.load({
 								params : {
 									taiNo : newValue

@@ -38,7 +38,7 @@ public class GetPiaDataByDate extends HttpServlet {
 			List<Map<String, Object>> list2 = getTaiInfoByDate(CommonUtil.addDay(playDate, -2));
 			List<Map<String, Object>> list3 = getTaiInfoByDate(CommonUtil.addDay(playDate, 1));
 			
-			List<Map<String, Object>> list6 = GetPiaBallsOfDay.getBallOutUntilSomeDay(playDate);
+			List<Map<String, Object>> list6 = GetPiaBallsOfDay.getBallOutUntilSomeDay(CommonUtil.addDay(playDate, -1));
 			
 			List<Map<String, Object>> list4 = CommonUtil.MergeMap(list, list1, "taiNo", "1", "rate", "ballOutput");
 			List<Map<String, Object>> list5 = CommonUtil.MergeMap(list4, list2, "taiNo", "2", "rate", "ballOutput");

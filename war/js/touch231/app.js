@@ -159,7 +159,7 @@ Ext.application({
 				return [
 						'<div>',
 						'<span style="color:#000099;font-size:15px;width: 100px;display: inline-block;">{taiNo}</span>',
-						'<span style="color:#000099;font-size:15px; width: 120px;display: inline-block;">差玉 ：{outTotal}</span><br/>',
+						'<span style="color:#000099;font-size:15px; width: 120px;display: inline-block;">前日差玉 ：{outTotal}</span><br/>',
 						'<span style="color:#000099;font-size:x-small;width: 50px;display: inline-block;">明日</span>',
 						'<span style="color:#ff0066;font-size:x-small;width: 70px;display: inline-block;">確率 ：{rate3}</span>',
 						'<span style="color:#660066;font-size:x-small;width: 120px;display: inline-block;">出玉 ：{ballOutput3}</span><br/>',

@@ -380,14 +380,13 @@ Ext.application({
 				});
 
 				// 台番
-				var taiNoSelectField3 = Ext.create('Ext.field.Select', {
+				var taiNoSelectFieldForChart = Ext.create('Ext.field.Select', {
 					label : '台番',
 					valueField : 'taiNo',
 					displayField : 'taiNo',
 					store : taiNoStore,
 					listeners : {
 						change : function(selectf, newValue, oldValue, eOpts) {
-							taiNoSelectField.setValue(newValue);
 							storeChart.load({
 								params : {
 									taiNo : newValue
@@ -408,7 +407,7 @@ Ext.application({
 							direction : 'horizontal',
 							directionLock : true
 						},
-						items : [ taiNoSelectField3 ]
+						items : [ taiNoSelectFieldForChart ]
 					}, {
 						xtype : 'chart',
 						background : "none",

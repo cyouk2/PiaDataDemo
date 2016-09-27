@@ -36,14 +36,14 @@ public class GetPiaDataByDate extends HttpServlet {
 			list = getTaiInfoByDate(playDate);
 			List<Map<String, Object>> list1 = getTaiInfoByDate(CommonUtil.addDay(playDate, -1));
 			List<Map<String, Object>> list2 = getTaiInfoByDate(CommonUtil.addDay(playDate, -2));
-			List<Map<String, Object>> list3 = getTaiInfoByDate(CommonUtil.addDay(playDate, 1));
+//			List<Map<String, Object>> list3 = getTaiInfoByDate(CommonUtil.addDay(playDate, 1));
 			
 			List<Map<String, Object>> list6 = GetPiaBallsOfDay.getBallOutUntilSomeDay(CommonUtil.addDay(playDate, -1));
 			
 			List<Map<String, Object>> list4 = CommonUtil.MergeMap(list, list1, "taiNo", "1", "rate", "ballOutput");
 			List<Map<String, Object>> list5 = CommonUtil.MergeMap(list4, list2, "taiNo", "2", "rate", "ballOutput");
-			List<Map<String, Object>> list7 = CommonUtil.MergeMap(list5, list3, "taiNo", "3", "rate", "ballOutput");
-			list = CommonUtil.MergeMap(list7, list6, "taiNo", "", "outTotal");
+//			List<Map<String, Object>> list7 = CommonUtil.MergeMap(list5, list3, "taiNo", "3", "rate", "ballOutput");
+			list = CommonUtil.MergeMap(list5, list6, "taiNo", "", "outTotal");
 		}
 
 		Gson gson = new Gson();

@@ -695,7 +695,7 @@ Ext.application({
 				var tabpanels = Ext.create('Ext.TabPanel', {
 					xtype : 'tabpanel',
 					tabBarPosition : 'bottom',
-					items : [ panelForIChiRan, formPanel, listPanelForSaTaMa, chartpanel,
+					items : [ panelForIChiRan, formPanel, chartpanel,listPanelForSaTaMa, 
 							listpanelForBalloutOfOneDay ]
 				});
 

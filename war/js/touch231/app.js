@@ -200,16 +200,6 @@ Ext.application({
 					handler : function() {
 						var strtaiNo = formPanel.getValues().taiNo;
 						var strplayDate = formPanel.getValues().playDate;
-
-						if (strtaiNo) {
-							Ext.Msg.alert('更新', '台番を入力してください。', Ext.emptyFn);
-							return;
-						}
-						if (strplayDate) {
-							Ext.Msg.alert('更新', '日付を選択してください。', Ext.emptyFn);
-							return;
-						}
-
 						formPanel.setMasked({
 							xtype : 'loadmask',
 							message : '検索中...'
@@ -242,12 +232,12 @@ Ext.application({
 						var id = formPanel.getValues().id;
 						var strtaiNo = formPanel.getValues().taiNo;
 						var strplayDate = formPanel.getValues().playDate;
-						if (strtaiNo) {
+						if (!strtaiNo) {
 							Ext.Msg.alert('保存 / 更新', '台番を入力してください。',
 									Ext.emptyFn);
 							return;
 						}
-						if (strplayDate) {
+						if (!strplayDate) {
 							Ext.Msg.alert('保存 / 更新', '日付を選択してください。',
 									Ext.emptyFn);
 							return;

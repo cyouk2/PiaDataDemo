@@ -106,7 +106,13 @@ Ext.define('piaDataModel', {
 
 Ext.application({
 			name : 'Sencha',
-
+		    isIconPrecomposed: false,
+		    icon: {
+		        57: 'resources/icons/default.png',
+		        72: 'resources/icons/default.png',
+		        114: 'resources/icons/default.png',
+		        144: 'resources/icons/default.png'
+		    },
 			getPlayDate : function() {
 				var dataOfPlayDate = [];
 				for (var i = 0; i >= -100; i--) {

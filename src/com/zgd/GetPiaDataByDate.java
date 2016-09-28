@@ -30,22 +30,11 @@ public class GetPiaDataByDate extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		String playDate = req.getParameter("playDate");
-		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-
-		if (!CommonUtil.IsNullOrEmpty(playDate)) {
-			list = getTaiInfoByDate(playDate);
-			List<Map<String, Object>> list1 = getTaiInfoByDate(CommonUtil.addDay(playDate, -1));
-			List<Map<String, Object>> list2 = getTaiInfoByDate(CommonUtil.addDay(playDate, -2));
-//			List<Map<String, Object>> list3 = getTaiInfoByDate(CommonUtil.addDay(playDate, 1));
-			
-			List<Map<String, Object>> list6 = GetPiaBallsOfDay.getBallOutUntilSomeDay(CommonUtil.addDay(playDate, -1));
-			
-			List<Map<String, Object>> list4 = CommonUtil.MergeMap(list, list1, "taiNo", "1", "rate", "ballOutput");
-			List<Map<String, Object>> list5 = CommonUtil.MergeMap(list4, list2, "taiNo", "2", "rate", "ballOutput");
-//			List<Map<String, Object>> list7 = CommonUtil.MergeMap(list5, list3, "taiNo", "3", "rate", "ballOutput");
-			list = CommonUtil.MergeMap(list5, list6, "taiNo", "", "outTotal");
-		}
-
+		List<Map<String, Object>> list = getTaiInfoByDate(playDate);
+		List<Map<String, Object>> list1 = getTaiInfoByDate(CommonUtil.addDay(playDate, -1));
+		List<Map<String, Object>> list6 = GetPiaBallsOfDay.getBallOutUntilSomeDay(CommonUtil.addDay(playDate, -1));
+		list = CommonUtil.MergeMap(list, list6, "taiNo", "", "outTotal");
+		list = CommonUtil.MergeMap(list, list1, "taiNo", "1", "rate","ballOutput");
 		Gson gson = new Gson();
 		ComRootResult re = new ComRootResult();
 		re.setSuccess(true);

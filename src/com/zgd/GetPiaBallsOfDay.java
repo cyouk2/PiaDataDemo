@@ -38,23 +38,20 @@ public class GetPiaBallsOfDay extends HttpServlet {
 		list.remove(0);
 		list.remove(0);
 		List<Map<String, Object>> list1 = GetPiaDataByDate.getTaiInfoByDate(playDate);
-		List<Map<String, Object>> list2 = GetPiaDataByDate.getTaiInfoByDate(CommonUtil.addDay(playDate, -1));
-		List<Map<String, Object>> list3 = GetPiaDataByDate.getTaiInfoByDate(CommonUtil.addDay(playDate, -2));
-		
-		List<Map<String, Object>> list7 = GetPiaDataByDate.getTaiInfoByDate(CommonUtil.addDay(playDate, 1));
-		
+		List<Map<String, Object>> list2 = GetPiaDataByDate.getTaiInfoByDate(CommonUtil.addDay(playDate, 1));
+		List<Map<String, Object>> list3 = GetPiaDataByDate.getTaiInfoByDate(CommonUtil.addDay(playDate, 2));
+
 		List<Map<String, Object>> list4 = CommonUtil.MergeMap(list, list1, "taiNo", "1", "rate", "ballOutput");
 		List<Map<String, Object>> list5 = CommonUtil.MergeMap(list4, list2, "taiNo", "2", "rate", "ballOutput");
 		List<Map<String, Object>> list6 = CommonUtil.MergeMap(list5, list3, "taiNo", "3", "rate", "ballOutput");
 		
-		List<Map<String, Object>> list8 = CommonUtil.MergeMap(list6, list7, "taiNo", "4", "rate", "ballOutput");
-		list8.add(0, a);
-		list8.add(1, ab);
+		list6.add(0, a);
+		list6.add(1, ab);
 		Gson gson = new Gson();
 		ComRootResult re = new ComRootResult();
 		re.setSuccess(true);
 		re.setMsg("");
-		re.setRoot(list8);
+		re.setRoot(list6);
 		resp.setContentType("text/plain");
 		resp.getWriter().println(gson.toJson(re));
 	}
@@ -79,6 +76,7 @@ public class GetPiaBallsOfDay extends HttpServlet {
 		} else {
 			q.setFilter(new CompositeFilter(CompositeFilterOperator.AND, list));
 		}
+		// 検索処理実行
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		PreparedQuery pq = datastore.prepare(q);
 
@@ -88,6 +86,7 @@ public class GetPiaBallsOfDay extends HttpServlet {
 		int outTotal = 0;
 		int outAll = 0;
 		String tainoKey = "557";
+		// データを洗い出す
 		for (Entity en : pq.asIterable()) {
 			String tai = CommonUtil.ObejctToString(en.getProperty("taiNo"));
 			if (!tai.equals(tainoKey)) {

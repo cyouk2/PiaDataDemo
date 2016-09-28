@@ -14,19 +14,15 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet>
 	<servlet>
 		<servlet-name>SavePiaData</servlet-name>
-		<servlet-class>com.zgd.SavePiaData</servlet-class>
+		<servlet-class>com.zgd.crud.SavePiaData</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>GetPiaData</servlet-name>
 		<servlet-class>com.zgd.GetPiaData</servlet-class>
 	</servlet>
 	<servlet>
-		<servlet-name>SaveTaiNoData</servlet-name>
-		<servlet-class>com.zgd.SaveTaiNoData</servlet-class>
-	</servlet>
-	<servlet>
 		<servlet-name>DeletePiaData</servlet-name>
-		<servlet-class>com.zgd.DeletePiaData</servlet-class>
+		<servlet-class>com.zgd.crud.DeletePiaData</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>GetTaiNoList</servlet-name>
@@ -34,7 +30,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet>
 	<servlet>
 		<servlet-name>UpdatePiaData</servlet-name>
-		<servlet-class>com.zgd.UpdatePiaData</servlet-class>
+		<servlet-class>com.zgd.crud.UpdatePiaData</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>GetPiaDataForChart</servlet-name>
@@ -42,11 +38,11 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet>
 	<servlet>
 		<servlet-name>PiaDataDownload</servlet-name>
-		<servlet-class>com.zgd.PiaDataDownload</servlet-class>
+		<servlet-class>com.zgd.dowanload.PiaDataDownload</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>SendMailOfPiaData</servlet-name>
-		<servlet-class>com.zgd.SendMailOfPiaData</servlet-class>
+		<servlet-class>com.zgd.cron.SendMailOfPiaData</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>PiaDataDownload</servlet-name>
@@ -73,6 +69,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<url-pattern>/GetPiaData</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
+		<servlet-name>GetTaiNoList</servlet-name>
+		<url-pattern>/GetTaiNoList</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
 		<servlet-name>SavePiaData</servlet-name>
 		<url-pattern>/SavePiaData</url-pattern>
 	</servlet-mapping>
@@ -81,16 +81,8 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<url-pattern>/DeletePiaData</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>GetTaiNoList</servlet-name>
-		<url-pattern>/GetTaiNoList</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
 		<servlet-name>UpdatePiaData</servlet-name>
 		<url-pattern>/UpdatePiaData</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>SaveTaiNoData</servlet-name>
-		<url-pattern>/SaveTaiNoData</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>1.html</welcome-file>

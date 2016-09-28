@@ -1,4 +1,4 @@
-package com.zgd;
+package com.zgd.cron;
 
 import java.io.IOException;
 import java.util.Properties;

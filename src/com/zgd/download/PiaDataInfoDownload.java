@@ -2,8 +2,6 @@ package com.zgd.download;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,15 +16,14 @@ import com.google.appengine.api.datastore.Query.SortDirection;
 import com.zgd.common.CommonUtil;
 
 @SuppressWarnings("serial")
-public class PiaDataDownload extends HttpServlet {
+public class PiaDataInfoDownload extends HttpServlet {
 
 	private PrintWriter out;
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
 		try {
-			String fileName = "piaData.csv";
+			String fileName = "PiaDataInfo.csv";
 			// コンテントタイプ設定
 			resp.setContentType("application/octet-stream");
 			// ヘッダー設定
@@ -34,33 +31,22 @@ public class PiaDataDownload extends HttpServlet {
 			// レスポンス出力バイトストリームを取得
 			out = resp.getWriter();
 			// データ出力
-			String strline = "";
-			List<String> etiqueta = new ArrayList<String>();
-			for (int i = 557; i <= 584; i++) {
-				strline += (CommonUtil.ObejctToString(i) + ",");
-				etiqueta.add(CommonUtil.ObejctToString(i));
-			}
-			Query q = new Query("PIA_DATA").addSort("playDate", SortDirection.ASCENDING).addSort("taiNo", SortDirection.ASCENDING);
+			DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+			Query q = new Query("PIA_DATA").addSort("playDate", SortDirection.ASCENDING);
 			PreparedQuery pq = datastore.prepare(q);
-//			String strMsg = "playDate,taiNo,rate,bonusCount,ballOutput";
-//			out.println(strMsg);
-	
-			out.println(strline);
-			strline = "";
+			String strMsg = "playDate,taiNo,rate,bonusCount,ballOutput";
+			out.println(strMsg);
+			
 			for (Entity en : pq.asIterable()) {
+				String playDate = CommonUtil.ObejctToString(en.getProperty("playDate"));
 				String taiNo = CommonUtil.ObejctToString(en.getProperty("taiNo"));
+				String rate = CommonUtil.ObejctToString(en.getProperty("rate"));
+				String bonusCount = CommonUtil.ObejctToString(en.getProperty("bonusCount"));
 				String ballOutput = CommonUtil.ObejctToString(en.getProperty("ballOutput"));
-				if (CommonUtil.ObejctToInt(taiNo) < 557){
-					continue;
-				}
-				strline += ballOutput + "," ;
-				if (taiNo.equals("584")){
-					out.println(strline);
-					strline = "";
-				}
+				String line = playDate + "," + taiNo + "," + rate + "," + bonusCount + "," + ballOutput;
+				out.println(line);
 			}
-		} catch (Exception e) {
-			out.println(e.getMessage());
+
 		} finally {
 			// 終了処理
 			if (out != null) {
@@ -69,6 +55,7 @@ public class PiaDataDownload extends HttpServlet {
 			}
 		}
 	}
+
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		doGet(req, resp);
 	}

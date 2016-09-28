@@ -4,86 +4,117 @@ xmlns="http://java.sun.com/xml/ns/javaee"
 xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+	<!-- 何日まで差玉集計 -->
 	<servlet>
 		<servlet-name>GetPiaDataByDate</servlet-name>
 		<servlet-class>com.zgd.GetPiaDataByDate</servlet-class>
 	</servlet>
+	<servlet-mapping>
+		<servlet-name>GetPiaDataByDate</servlet-name>
+		<url-pattern>/GetPiaDataByDate</url-pattern>
+	</servlet-mapping>
+
+	<!-- 当日出玉のリスト 台別 -->
 	<servlet>
 		<servlet-name>GetPiaBallsOfDay</servlet-name>
 		<servlet-class>com.zgd.GetPiaBallsOfDay</servlet-class>
 	</servlet>
-	<servlet>
-		<servlet-name>SavePiaData</servlet-name>
-		<servlet-class>com.zgd.crud.SavePiaData</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>GetPiaData</servlet-name>
-		<servlet-class>com.zgd.GetPiaData</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>DeletePiaData</servlet-name>
-		<servlet-class>com.zgd.crud.DeletePiaData</servlet-class>
-	</servlet>
+	<servlet-mapping>
+		<servlet-name>GetPiaBallsOfDay</servlet-name>
+		<url-pattern>/GetPiaBallsOfDay</url-pattern>
+	</servlet-mapping>
+
+	<!-- 台番リスト取得 -->
 	<servlet>
 		<servlet-name>GetTaiNoList</servlet-name>
 		<servlet-class>com.zgd.GetTaiNoList</servlet-class>
 	</servlet>
-	<servlet>
-		<servlet-name>UpdatePiaData</servlet-name>
-		<servlet-class>com.zgd.crud.UpdatePiaData</servlet-class>
-	</servlet>
+	<servlet-mapping>
+		<servlet-name>GetTaiNoList</servlet-name>
+		<url-pattern>/GetTaiNoList</url-pattern>
+	</servlet-mapping>
+
+	<!-- 図を表示用データ情報取得 -->
 	<servlet>
 		<servlet-name>GetPiaDataForChart</servlet-name>
 		<servlet-class>com.zgd.GetPiaDataForChart</servlet-class>
 	</servlet>
+	<servlet-mapping>
+		<servlet-name>GetPiaDataForChart</servlet-name>
+		<url-pattern>/GetPiaDataForChart</url-pattern>
+	</servlet-mapping>
+
+	<!-- データ取得 -->
 	<servlet>
-		<servlet-name>PiaDataDownload</servlet-name>
-		<servlet-class>com.zgd.dowanload.PiaDataDownload</servlet-class>
+		<servlet-name>GetPiaData</servlet-name>
+		<servlet-class>com.zgd.GetPiaData</servlet-class>
 	</servlet>
+	<servlet-mapping>
+		<servlet-name>GetPiaData</servlet-name>
+		<url-pattern>/GetPiaData</url-pattern>
+	</servlet-mapping>
+	
+	<!-- データ保存 -->
 	<servlet>
-		<servlet-name>SendMailOfPiaData</servlet-name>
-		<servlet-class>com.zgd.cron.SendMailOfPiaData</servlet-class>
+		<servlet-name>SavePiaData</servlet-name>
+		<servlet-class>com.zgd.crud.SavePiaData</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SavePiaData</servlet-name>
+		<url-pattern>/SavePiaData</url-pattern>
+	</servlet-mapping>
+	
+	<!-- データ削除 -->
+	<servlet>
+		<servlet-name>DeletePiaData</servlet-name>
+		<servlet-class>com.zgd.crud.DeletePiaData</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DeletePiaData</servlet-name>
+		<url-pattern>/DeletePiaData</url-pattern>
+	</servlet-mapping>
+	
+	<!-- データ更新 -->
+	<servlet>
+		<servlet-name>UpdatePiaData</servlet-name>
+		<servlet-class>com.zgd.crud.UpdatePiaData</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UpdatePiaData</servlet-name>
+		<url-pattern>/UpdatePiaData</url-pattern>
+	</servlet-mapping>
+	
+	<!-- PIA差玉情報download 処理 -->
+	<servlet>
+		<servlet-name>PiaDataBallOutsDownload</servlet-name>
+		<servlet-class>com.zgd.dowanload.PiaDataBallOutsDownload</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>PiaDataDownload</servlet-name>
 		<url-pattern>/PiaDataDownload</url-pattern>
 	</servlet-mapping>
+	
+	<!-- PIAデータ全情報download 処理 -->
+	<servlet>
+		<servlet-name>PiaDataInfoDownload</servlet-name>
+		<servlet-class>com.zgd.dowanload.PiaDataInfoDownload</servlet-class>
+	</servlet>
 	<servlet-mapping>
-		<servlet-name>GetPiaBallsOfDay</servlet-name>
-		<url-pattern>/GetPiaBallsOfDay</url-pattern>
+		<servlet-name>PiaDataInfoDownload</servlet-name>
+		<url-pattern>/PiaDataInfoDownload</url-pattern>
 	</servlet-mapping>
+	
+	
+	<!-- 定期的なデータ情報のメール送信処理 ２４時間毎-->
+	<servlet>
+		<servlet-name>SendMailOfPiaData</servlet-name>
+		<servlet-class>com.zgd.cron.SendMailOfPiaData</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>SendMailOfPiaData</servlet-name>
 		<url-pattern>/SendMailOfPiaData</url-pattern>
 	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>GetPiaDataByDate</servlet-name>
-		<url-pattern>/GetPiaDataByDate</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>GetPiaDataForChart</servlet-name>
-		<url-pattern>/GetPiaDataForChart</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>GetPiaData</servlet-name>
-		<url-pattern>/GetPiaData</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>GetTaiNoList</servlet-name>
-		<url-pattern>/GetTaiNoList</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>SavePiaData</servlet-name>
-		<url-pattern>/SavePiaData</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>DeletePiaData</servlet-name>
-		<url-pattern>/DeletePiaData</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>UpdatePiaData</servlet-name>
-		<url-pattern>/UpdatePiaData</url-pattern>
-	</servlet-mapping>
+
 	<welcome-file-list>
 		<welcome-file>1.html</welcome-file>
 	</welcome-file-list>

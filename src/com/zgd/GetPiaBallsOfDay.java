@@ -31,7 +31,7 @@ import com.zgd.common.CommonUtil;
 public class GetPiaBallsOfDay extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		String playDate = req.getParameter("playDate");
+		String playDate = CommonUtil.ObejctToString(req.getParameter("playDate"));
 		List<Map<String, Object>> list = getBallOutUntilSomeDay(playDate);
 		Map<String, Object> a = list.get(0);
 		Map<String, Object> ab = list.get(1);

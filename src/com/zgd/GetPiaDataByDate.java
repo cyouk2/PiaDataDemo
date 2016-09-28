@@ -29,7 +29,7 @@ import com.zgd.common.CommonUtil;
 public class GetPiaDataByDate extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		String playDate = req.getParameter("playDate");
+		String playDate = CommonUtil.ObejctToString(req.getParameter("playDate"));
 		List<Map<String, Object>> list = getTaiInfoByDate(playDate);
 		List<Map<String, Object>> list1 = getTaiInfoByDate(CommonUtil.addDay(playDate, -1));
 		List<Map<String, Object>> list6 = GetPiaBallsOfDay.getBallOutUntilSomeDay(CommonUtil.addDay(playDate, -1));

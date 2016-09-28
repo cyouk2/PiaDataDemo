@@ -277,8 +277,7 @@ Ext.onReady(function() {
 	                    success: function(form, action) {
 	                    	var strTaiNo = form.getValues().taiNo
 	                    	combTaiNo.setValue(strTaiNo);
-	                    	piaDataStore.reload();
-	                        Ext.Msg.alert('Success', action.result.msg);
+	                    	piaDataStore.load({ url : 'GetPiaData?taiNo=' + strTaiNo });
 	                    },
 	                    failure: function(form, action) {
 	                        Ext.Msg.alert('Failed', action.result.msg);

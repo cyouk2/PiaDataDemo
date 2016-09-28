@@ -26,7 +26,7 @@ public class PiaDataBallOutsDownload extends HttpServlet {
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
 		try {
-			String fileName = "piaData.csv";
+			String fileName = "piaDataForballOutput.csv";
 			// コンテントタイプ設定
 			resp.setContentType("application/octet-stream");
 			// ヘッダー設定

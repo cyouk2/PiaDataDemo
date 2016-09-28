@@ -1,27 +1,12 @@
-<!-- Indices written at Wed, 21 Sep 2016 15:32:59 GMT+09:00 -->
+<!-- Indices written at Wed, 28 Sep 2016 15:12:56 GMT+09:00 -->
 
 <datastore-indexes>
 
-    <!-- Used 28 times in query history -->
+    <!-- Used 50 times in query history -->
     <datastore-index kind="PIA_DATA" ancestor="false" source="auto">
-        <property name="taiNo" direction="asc"/>
-        <property name="playDate" direction="asc"/>
-    </datastore-index>
-
-    <!-- Used 1 time in query history -->
-    <datastore-index kind="PIA_DATA" ancestor="false" source="auto">
-        <property name="playDate" direction="asc"/>
-        <property name="taiNo" direction="asc"/>
-    </datastore-index>
-    
-	<datastore-index kind="PIA_DATA" ancestor="false" source="manual">
-        <property name="playDate" direction="asc"/>
-        <property name="taiNo" direction="asc"/>
-        <property name="ballOutput" direction="asc"/>
-    </datastore-index>
-    <datastore-index kind="PIA_DATA" ancestor="false" source="manual">
         <property name="playDate" direction="asc"/>
         <property name="taiNo" direction="asc"/>
         <property name="ballOutput" direction="desc"/>
     </datastore-index>
+
 </datastore-indexes>

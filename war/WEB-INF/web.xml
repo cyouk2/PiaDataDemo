@@ -86,18 +86,18 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	
 	<!-- PIA差玉情報download 処理 -->
 	<servlet>
-		<servlet-name>PiaDataBallOutsDownload</servlet-name>
-		<servlet-class>com.zgd.dowanload.PiaDataBallOutsDownload</servlet-class>
+		<servlet-name>BallOutsDownload</servlet-name>
+		<servlet-class>com.zgd.download.PiaDataBallOutsDownload</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>PiaDataDownload</servlet-name>
-		<url-pattern>/PiaDataDownload</url-pattern>
+		<servlet-name>BallOutsDownload</servlet-name>
+		<url-pattern>/BallOutsDownload</url-pattern>
 	</servlet-mapping>
 	
 	<!-- PIAデータ全情報download 処理 -->
 	<servlet>
 		<servlet-name>PiaDataInfoDownload</servlet-name>
-		<servlet-class>com.zgd.dowanload.PiaDataInfoDownload</servlet-class>
+		<servlet-class>com.zgd.download.PiaDataInfoDownload</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>PiaDataInfoDownload</servlet-name>

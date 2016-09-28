@@ -262,8 +262,8 @@ Ext.onReady(function() {
 		},{
 			fieldLabel : 'ballOutput',
 			name : 'ballOutput',
-			xtype : 'numberfield',
-			value:0
+			xtype : 'textfield',
+			value:"0"
 		}],
 		buttons : [ {
 	        text: 'SAVE',

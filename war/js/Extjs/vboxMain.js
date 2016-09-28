@@ -245,7 +245,7 @@ Ext.onReady(function() {
 			name : 'taiNo',
 			allowBlank : false,
 			xtype : 'numberfield',
-			value:600
+			value:570
 		}, {
 			fieldLabel : 'bonusCount',
 			name : 'bonusCount',

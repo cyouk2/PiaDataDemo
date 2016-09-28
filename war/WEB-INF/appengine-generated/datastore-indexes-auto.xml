@@ -1,4 +1,4 @@
-<!-- Indices written at Wed, 28 Sep 2016 15:22:12 GMT+09:00 -->
+<!-- Indices written at Wed, 28 Sep 2016 15:50:09 GMT+09:00 -->
 
 <datastore-indexes>
 
@@ -9,7 +9,7 @@
         <property name="ballOutput" direction="desc"/>
     </datastore-index>
 
-    <!-- Used 28 times in query history -->
+    <!-- Used 53 times in query history -->
     <datastore-index kind="PIA_DATA" ancestor="false" source="auto">
         <property name="taiNo" direction="asc"/>
         <property name="playDate" direction="asc"/>

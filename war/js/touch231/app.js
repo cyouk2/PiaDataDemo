@@ -130,18 +130,10 @@ Ext.application({
 			getItemTplForBall : function() {
 				return [
 						'<div>',
-						'<span style="color:#000099;font-size:15px;width: 120px;display: inline-block;">{taiNo}</span>',
-						'<span style="color:#000099;font-size:15px; width: 70px;display: inline-block;">順位:{rank}</span><br/>',
-						'<span style="color:#006600;font-size:x-small;width: 120px;display: inline-block;">差玉 ：{outTotal}</span><br/>',
-						'<span style="color:#000099;font-size:x-small;width: 50px;display: inline-block;">明後日</span>',
-						'<span style="color:#ff0066;font-size:x-small;width: 70px;display: inline-block;">確率 ：{rate3}</span>',
-						'<span style="color:#660066;font-size:x-small;width: 120px;display: inline-block;">出玉 ：{ballOutput3}</span><br/>',
-						'<span style="color:#000099;font-size:x-small;width: 50px;display: inline-block;">明日</span>',
-						'<span style="color:#ff0066;font-size:x-small;width: 70px;display: inline-block;">確率 ：{rate2}</span>',
-						'<span style="color:#660066;font-size:x-small;width: 120px;display: inline-block;">出玉 ：{ballOutput2}</span><br/>',
-						'<span style="color:#000099;font-size:x-small;width: 50px;display: inline-block;">本日</span>',
-						'<span style="color:#ff0066;font-size:x-small;width: 70px;display: inline-block;">確率 ：{rate1}</span>',
-						'<span style="color:#660066;font-size:x-small;width: 120px;display: inline-block;">出玉 ：{ballOutput1}</span><br/>',
+						
+						'<span style="color:#000099;font-size:x-small; width: 70px;display: inline-block;">No.{rank}</span>',
+						'<span style="color:#ff0066;font-size:15px;width: 80px;display: inline-block;">{taiNo}</span>',
+						'<span style="color:#006600;font-size:x-small;width: 120px;display: inline-block;">差玉  ： {outTotal}</span>',
 						'</div>' ].join("");
 			},
 			getItemTpl : function() {
@@ -152,20 +144,6 @@ Ext.application({
 						'<span style="color: #660066;font-size:x-small;width: 70px;display: inline-block;">出玉 ：{ballOutput}</span></div>' ]
 						.join("");
 			},
-			getItemTplForDate : function() {
-				return [
-						'<div>',
-						'<span style="color:#000099;font-size:15px;width: 50px;display: inline-block;">{taiNo}</span>',
-						'<span style="color:#000099;font-size:15px; width: 180px;display: inline-block;">前日差玉 ：{outTotal}</span><br/>',
-						'<span style="color:#000099;font-size:x-small;width: 50px;display: inline-block;">本日</span>',
-						'<span style="color:#ff0066;font-size:x-small;width: 70px;display: inline-block;">確率 ：{rate}</span>',
-						'<span style="color:#660066;font-size:x-small;width: 120px;display: inline-block;">出玉 ：{ballOutput}</span><br/>',
-						'<span style="color:#000099;font-size:x-small;width: 50px;display: inline-block;">前日</span>',
-						'<span style="color:#ff0066;font-size:x-small;width: 70px;display: inline-block;">確率 ：{rate1}</span>',
-						'<span style="color:#660066;font-size:x-small;width: 120px;display: inline-block;">出玉 ：{ballOutput1}</span>',
-						'</div>' ].join("");
-			},
-			
 			launch : function() {
 
 				// ################################# form start
@@ -509,68 +487,6 @@ Ext.application({
 					]
 				});
 
-				// ################################ 差玉日別 listPanel Start
-				var storeChartForDate = Ext.create("Ext.data.Store", {
-					model : "outTotalModel",
-					proxy : {
-						type : "ajax",
-						url : "GetPiaDataByDate",
-						reader : {
-							type : "json",
-							rootProperty : "root"
-						}
-					},
-					autoLoad : true
-				});
-				// 日付別
-				var playDateSelectField1 = Ext.create('Ext.field.Select', {
-					label : 'DATE',
-					valueField : 'value',
-					displayField : 'text',
-					store : {
-						data : this.getPlayDate()
-					},
-					listeners : {
-						change : function(selectf, newValue, oldValue, eOpts) {
-							storeChartForDate.load({
-								params : {
-									playDate : newValue
-								}
-							});
-						}
-					}
-				});
-				var listForBalloutOfOneDay = Ext.create('Ext.List', {
-					itemTpl : this.getItemTplForDate(),
-					store : storeChartForDate,
-					listeners : {
-						selectionchange : function(selection, records, eOpts) {
-							tabpanels.setActiveItem(0);
-							var intTaiNo = records[0].data.taiNo;
-							taiNoSelectFieldForIChiRan.setValue(intTaiNo);
-							taiNoSelectFieldForChart.setValue(intTaiNo);
-							storeChart.load({
-								params : {
-									taiNo : intTaiNo
-								}
-							});
-						}
-					}
-				});
-				var listpanelForBalloutOfOneDay = Ext.create("Ext.Panel", {
-					title : '差玉日別',
-					iconCls : 'action',
-					layout : 'fit',
-					items : [ {
-						xtype : 'toolbar',
-						docked : 'top',
-						scrollable : {
-							direction : 'horizontal',
-							directionLock : true
-						},
-						items : [ playDateSelectField1 ]
-					}, listForBalloutOfOneDay ]
-				});
 				// ################################ 差玉台別 ListPanel Start
 				
 				var storeForSaTaMa = Ext.create("Ext.data.Store", {
@@ -685,8 +601,7 @@ Ext.application({
 				var tabpanels = Ext.create('Ext.TabPanel', {
 					xtype : 'tabpanel',
 					tabBarPosition : 'bottom',
-					items : [ panelForIChiRan, formPanel, chartpanel,listPanelForSaTaMa, 
-							listpanelForBalloutOfOneDay ]
+					items : [ panelForIChiRan, formPanel, chartpanel,listPanelForSaTaMa]
 				});
 
 				Ext.Viewport.add(tabpanels);

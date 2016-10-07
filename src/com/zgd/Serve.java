@@ -26,19 +26,22 @@ public class Serve extends HttpServlet {
 		String line = null;
 		
 		
-		String columns = "playDate,taiNo,bonusCount,rate,ballOutput,ballInput,totalOut,totalOutBefore,rateN,bonusCountN,ballOutputN,playDateN,totalOutN";
+		//String columns = "playDate,taiNo,bonusCount,rate,ballOutput,ballInput,totalOut,totalOutBefore,rateN,bonusCountN,ballOutputN,playDateN,totalOutN";
+		String columns ="playDate,taiNo,rate,bonusCount,ballOutput";
 		String[] a = columns.split(",");
 		while ((line = reader.readLine()) != null) {
 			// Do whatever you like with the line
 			savepidata(line.split(","), a);
 		}
 		reader.close();
+		res.setContentType("text/plain");
+		res.getWriter().println("OK");
 	}
 	
 	private void savepidata(String[] line,String[] a){
 		
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-		Entity employee = new Entity("PIA_DATA_INFO");
+		Entity employee = new Entity("PIA_DATA");
 		for(int i = 0; i < a.length; i++){
 			employee.setProperty(a[i], line[i]);
 		}

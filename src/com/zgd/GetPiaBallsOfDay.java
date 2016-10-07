@@ -33,25 +33,12 @@ public class GetPiaBallsOfDay extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		String playDate = CommonUtil.ObejctToString(req.getParameter("playDate"));
 		List<Map<String, Object>> list = getBallOutUntilSomeDay(playDate);
-		Map<String, Object> a = list.get(0);
-		Map<String, Object> ab = list.get(1);
-		list.remove(0);
-		list.remove(0);
-		List<Map<String, Object>> list1 = GetPiaDataByDate.getTaiInfoByDate(playDate);
-		List<Map<String, Object>> list2 = GetPiaDataByDate.getTaiInfoByDate(CommonUtil.addDay(playDate, 1));
-		List<Map<String, Object>> list3 = GetPiaDataByDate.getTaiInfoByDate(CommonUtil.addDay(playDate, 2));
 
-		List<Map<String, Object>> list4 = CommonUtil.MergeMap(list, list1, "taiNo", "1", "rate", "ballOutput");
-		List<Map<String, Object>> list5 = CommonUtil.MergeMap(list4, list2, "taiNo", "2", "rate", "ballOutput");
-		List<Map<String, Object>> list6 = CommonUtil.MergeMap(list5, list3, "taiNo", "3", "rate", "ballOutput");
-		
-		list6.add(0, a);
-		list6.add(1, ab);
 		Gson gson = new Gson();
 		ComRootResult re = new ComRootResult();
 		re.setSuccess(true);
 		re.setMsg("");
-		re.setRoot(list6);
+		re.setRoot(list);
 		resp.setContentType("text/plain");
 		resp.getWriter().println(gson.toJson(re));
 	}
@@ -84,7 +71,6 @@ public class GetPiaBallsOfDay extends HttpServlet {
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		int outTotal = 0;
-		int outAll = 0;
 		String tainoKey = "557";
 		// データを洗い出す
 		for (Entity en : pq.asIterable()) {
@@ -99,7 +85,6 @@ public class GetPiaBallsOfDay extends HttpServlet {
 			}
 			int balls = CommonUtil.ObejctToInt(en.getProperty("ballOutput"));
 			outTotal += balls;
-			outAll += balls;
 
 		}
 		if (tainoKey.equals("584")) {
@@ -131,16 +116,6 @@ public class GetPiaBallsOfDay extends HttpServlet {
 			index ++;
 			listMap1.add(map);
 		}
-		
-		
-		map = new HashMap<String, Object>();
-		map.put("taiNo", "TOTAL");
-		map.put("outTotal", outAll);
-		listMap1.add(0, map);
-		map = new HashMap<String, Object>();
-		map.put("taiNo", "AVERAGE");
-		map.put("outTotal", (int) (outAll / 28));
-		listMap1.add(1, map);
 		return listMap1;
 	}
 

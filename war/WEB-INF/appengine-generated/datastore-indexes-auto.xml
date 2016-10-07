@@ -1,8 +1,8 @@
-<!-- Indices written at Fri, 7 Oct 2016 17:07:48 GMT+09:00 -->
+<!-- Indices written at Fri, 7 Oct 2016 17:22:50 GMT+09:00 -->
 
 <datastore-indexes>
 
-    <!-- Used 2 times in query history -->
+    <!-- Used 116 times in query history -->
     <datastore-index kind="PIA_DATA" ancestor="false" source="auto">
         <property name="taiNo" direction="asc"/>
         <property name="playDate" direction="asc"/>

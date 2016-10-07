@@ -106,13 +106,13 @@ Ext.define('piaDataModel', {
 
 Ext.application({
 			name : 'Sencha',
-		    isIconPrecomposed: false,
-		    icon: {
-		        57: 'resources/icons/default.png',
-		        72: 'resources/icons/default.png',
-		        114: 'resources/icons/default.png',
-		        144: 'resources/icons/default.png'
-		    },
+			isIconPrecomposed : false,
+			icon : {
+				57 : 'resources/icons/default.png',
+				72 : 'resources/icons/default.png',
+				114 : 'resources/icons/default.png',
+				144 : 'resources/icons/default.png'
+			},
 			getPlayDate : function() {
 				var dataOfPlayDate = [];
 				for (var i = 0; i >= -100; i--) {
@@ -130,9 +130,8 @@ Ext.application({
 			getItemTplForBall : function() {
 				return [
 						'<div>',
-						
 						'<span style="color:#000099;font-size:x-small; width: 70px;display: inline-block;">No.{rank}</span>',
-						'<span style="color:#ff0066;font-size:15px;width: 80px;display: inline-block;">{taiNo}</span>',
+						'<span style="color:#ff0066;font-size:x-small;width: 80px;display: inline-block;">台番 : {taiNo}</span>',
 						'<span style="color:#006600;font-size:x-small;width: 120px;display: inline-block;">差玉  ： {outTotal}</span>',
 						'</div>' ].join("");
 			},
@@ -147,7 +146,6 @@ Ext.application({
 			launch : function() {
 
 				// ################################# form start
-				// ##############################
 				// 既存の台番情報のstore
 				var taiNoStore = Ext.create("Ext.data.Store", {
 					model : "taiNoModel",
@@ -173,7 +171,8 @@ Ext.application({
 							xtype : 'loadmask',
 							message : '検索中...'
 						});
-						var strUrl = 'GetPiaData?taiNo=' + strtaiNo + '&playDate=' + strplayDate;
+						var strUrl = 'GetPiaData?taiNo=' + strtaiNo
+								+ '&playDate=' + strplayDate;
 						Ext.Ajax.request({
 							url : strUrl,
 							success : function(response) {
@@ -182,7 +181,8 @@ Ext.application({
 										response.responseText, true);
 								if (esponseText.root.length > 0) {
 									var record = esponseText.root[0];
-									var piadataInfo = Ext.create('piaDataModel', record);
+									var piadataInfo = Ext.create(
+											'piaDataModel', record);
 									formPanel.setRecord(piadataInfo);
 								} else {
 									formPanel.reset();
@@ -220,7 +220,8 @@ Ext.application({
 								}
 							});
 						} else {
-							formPanel.submit({
+							formPanel
+									.submit({
 										url : 'SavePiaData',
 										waitMsg : 'データ保存中...',
 										success : function(result, data) {
@@ -488,7 +489,7 @@ Ext.application({
 				});
 
 				// ################################ 差玉台別 ListPanel Start
-				
+
 				var storeForSaTaMa = Ext.create("Ext.data.Store", {
 					model : "outTotalModel",
 					proxy : {
@@ -519,7 +520,6 @@ Ext.application({
 						}
 					}
 				});
-
 
 				var listForSaTaMa = Ext.create('Ext.List', {
 					itemTpl : this.getItemTplForBall(),
@@ -554,21 +554,23 @@ Ext.application({
 				});
 				// ################################ 一覧日別 ListPanel Start
 				// 台番
-				var taiNoSelectFieldForIChiRan = Ext.create('Ext.field.Select', {
-					label : '台番',
-					valueField : 'taiNo',
-					displayField : 'taiNo',
-					store : taiNoStore,
-					listeners : {
-						change : function(selectf, newValue, oldValue, eOpts) {
-							storeChart.load({
-								params : {
-									taiNo : newValue
+				var taiNoSelectFieldForIChiRan = Ext.create('Ext.field.Select',
+						{
+							label : '台番',
+							valueField : 'taiNo',
+							displayField : 'taiNo',
+							store : taiNoStore,
+							listeners : {
+								change : function(selectf, newValue, oldValue,
+										eOpts) {
+									storeChart.load({
+										params : {
+											taiNo : newValue
+										}
+									});
 								}
-							});
-						}
-					}
-				});
+							}
+						});
 				var listPanelForIChiRan = Ext.create('Ext.List', {
 					itemTpl : this.getItemTpl(),
 					store : storeChart,
@@ -601,7 +603,8 @@ Ext.application({
 				var tabpanels = Ext.create('Ext.TabPanel', {
 					xtype : 'tabpanel',
 					tabBarPosition : 'bottom',
-					items : [ panelForIChiRan, formPanel, chartpanel,listPanelForSaTaMa]
+					items : [ panelForIChiRan, formPanel, chartpanel,
+							listPanelForSaTaMa ]
 				});
 
 				Ext.Viewport.add(tabpanels);

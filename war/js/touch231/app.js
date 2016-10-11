@@ -382,8 +382,8 @@ Ext.application({
 					type : "json",
 					rootProperty : "root"
 				}
-			},
-			autoLoad : true
+			}/*,
+			autoLoad : true*/
 		});
 
 		// 台番

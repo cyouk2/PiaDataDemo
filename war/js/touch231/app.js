@@ -23,13 +23,10 @@ Ext.define('piaDataModel', {
 			name : 'bonusCount',
 			type : 'integer'
 		}, {
-			name : 'ballInput',
+			name : 'rate',
 			type : 'integer'
 		}, {
 			name : 'ballOutput',
-			type : 'integer'
-		}, {
-			name : 'rate',
 			type : 'integer'
 		}, {
 			name : 'playDateN',
@@ -38,13 +35,10 @@ Ext.define('piaDataModel', {
 			name : 'bonusCountN',
 			type : 'integer'
 		}, {
-			name : 'ballInputN',
+			name : 'rateN',
 			type : 'integer'
 		}, {
 			name : 'ballOutputN',
-			type : 'integer'
-		}, {
-			name : 'rateN',
 			type : 'integer'
 		}, {
 			name : 'totalOut',
@@ -53,11 +47,35 @@ Ext.define('piaDataModel', {
 			name : 'outMax',
 			type : 'integer'
 		}, {
-			name : 'outTotal',
-			type : 'integer'
-		}, {
 			name : 'rank',
 			type : 'string'
+		}, {
+			name : 'bonusCount1',
+			type : 'integer'
+		}, {
+			name : 'rate1',
+			type : 'integer'
+		}, {
+			name : 'ballOutput1',
+			type : 'integer'
+		}, {
+			name : 'bonusCount2',
+			type : 'integer'
+		}, {
+			name : 'rate2',
+			type : 'integer'
+		}, {
+			name : 'ballOutput2',
+			type : 'integer'
+		}, {
+			name : 'bonusCount3',
+			type : 'integer'
+		}, {
+			name : 'rate3',
+			type : 'integer'
+		}, {
+			name : 'ballOutput3',
+			type : 'integer'
 		} ]
 	}
 });
@@ -87,9 +105,29 @@ Ext.application({
 	getItemTplForBall : function() {
 		return [
 				'<div>',
-				'<span style="color:#000099;font-size:x-small; width: 70px;display: inline-block;">No.{rank}</span>',
-				'<span style="color:#ff0066;font-size:x-small;width: 80px;display: inline-block;">台番 : {taiNo}</span>',
-				'<span style="color:#006600;font-size:x-small;width: 120px;display: inline-block;">差玉  ： {outTotal}</span>',
+				'<span style="color:#000099;font-size:15px; width: 60px;display: inline-block;">No.{rank}</span>',
+				'<span style="color:#000099;font-size:15px;width: 90px;display: inline-block;">台番 : {taiNo}</span>',
+				'<span style="color:#000099;font-size:15px;width: 120px;display: inline-block;">差玉  ： {totalOut}</span><br/>',
+				
+				'<span style="color:#000099;font-size:x-small;width: 60px;display: inline-block;">本日</span>',
+				'<span style="color:#006600;font-size:x-small;width: 70px;display: inline-block;">当たり ：{bonusCount}</span>',
+				'<span style="color:#ff0066;font-size:x-small;width: 70px;display: inline-block;">確率 ：{rate}</span>',
+				'<span style="color: #660066;font-size:x-small;width: 70px;display: inline-block;">出玉 ：{ballOutput}</span><br/>',
+				
+				'<span style="color:#000099;font-size:x-small;width: 60px;display: inline-block;">1日前</span>',
+				'<span style="color:#006600;font-size:x-small;width: 70px;display: inline-block;">当たり ：{bonusCount1}</span>',
+				'<span style="color:#ff0066;font-size:x-small;width: 70px;display: inline-block;">確率 ：{rate1}</span>',
+				'<span style="color: #660066;font-size:x-small;width: 70px;display: inline-block;">出玉 ：{ballOutput1}</span><br/>',
+				
+				'<span style="color:#000099;font-size:x-small;width: 60px;display: inline-block;">2日前</span>',
+				'<span style="color:#006600;font-size:x-small;width: 70px;display: inline-block;">当たり ：{bonusCount2}</span>',
+				'<span style="color:#ff0066;font-size:x-small;width: 70px;display: inline-block;">確率 ：{rate2}</span>',
+				'<span style="color: #660066;font-size:x-small;width: 70px;display: inline-block;">出玉 ：{ballOutput2}</span><br/>',
+				
+				'<span style="color:#000099;font-size:x-small;width: 60px;display: inline-block;">3日前</span>',
+				'<span style="color:#006600;font-size:x-small;width: 70px;display: inline-block;">当たり ：{bonusCount3}</span>',
+				'<span style="color:#ff0066;font-size:x-small;width: 70px;display: inline-block;">確率 ：{rate3}</span>',
+				'<span style="color: #660066;font-size:x-small;width: 70px;display: inline-block;">出玉 ：{ballOutput3}</span>',
 				'</div>' ].join("");
 	},
 	getItemTpl : function() {
@@ -97,7 +135,9 @@ Ext.application({
 				'<div><span style="color:#000099";font-size:15px;>{playDate}</span><br/>',
 				'<span style="color:#006600;font-size:x-small;width: 70px;display: inline-block;">当たり ：{bonusCount}</span>',
 				'<span style="color:#ff0066;font-size:x-small;width: 70px;display: inline-block;">確率 ：{rate}</span>',
-				'<span style="color: #660066;font-size:x-small;width: 70px;display: inline-block;">出玉 ：{ballOutput}</span></div>' ]
+				'<span style="color: #660066;font-size:x-small;width: 70px;display: inline-block;">出玉 ：{ballOutput}</span>',
+				'</div>'
+				]
 				.join("");
 	},
 	launch : function() {

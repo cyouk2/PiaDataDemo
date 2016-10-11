@@ -57,7 +57,8 @@ public class GetPiaBallsOfDay extends HttpServlet {
 		}
 		list.add(new FilterPredicate("taiNo", FilterOperator.IN, etiqueta));
 		// 検索条件設定
-		Query q = new Query("PIA_DATA").addSort("taiNo", SortDirection.ASCENDING);
+		Query q = new Query("PIA_DATA").addSort("taiNo", SortDirection.ASCENDING).addSort("playDate",
+				SortDirection.DESCENDING);
 		if (list.size() == 1) {
 			q.setFilter(list.get(0));
 		} else {
@@ -70,33 +71,64 @@ public class GetPiaBallsOfDay extends HttpServlet {
 		List<Map<String, Object>> listMap = new ArrayList<Map<String, Object>>();
 		Map<String, Object> map = new HashMap<String, Object>();
 
-		int outTotal = 0;
+		int totalOut = 0;
 		String tainoKey = "557";
+
+		Map<String, Object> firstEl = new HashMap<String, Object>();
+		Map<String, Object> secondEl = new HashMap<String, Object>();
+		Map<String, Object> thirdEl = new HashMap<String, Object>();
+		Map<String, Object> furthEl = new HashMap<String, Object>();
+		int sortIndex = 0;
 		// データを洗い出す
 		for (Entity en : pq.asIterable()) {
 			String tai = CommonUtil.ObejctToString(en.getProperty("taiNo"));
+
 			if (!tai.equals(tainoKey)) {
-				map.put("taiNo", tainoKey);
-				map.put("outTotal", outTotal);
+				map.put("totalOut", totalOut);
+				map.putAll(firstEl);
+				map.putAll(CommonUtil.convertKeyOfMap(secondEl, "1"));
+				map.putAll(CommonUtil.convertKeyOfMap(thirdEl, "2"));
+				map.putAll(CommonUtil.convertKeyOfMap(furthEl, "3"));
 				listMap.add(map);
 				map = new HashMap<String, Object>();
+				firstEl = new HashMap<String, Object>();
+				secondEl = new HashMap<String, Object>();
+				thirdEl = new HashMap<String, Object>();
 				tainoKey = tai;
-				outTotal = 0;
+				totalOut = 0;
+				sortIndex = 0;
 			}
 			int balls = CommonUtil.ObejctToInt(en.getProperty("ballOutput"));
-			outTotal += balls;
-
+			if (sortIndex == 0) {
+				firstEl = en.getProperties();
+			}
+			if (sortIndex == 1) {
+				secondEl = en.getProperties();
+			}
+			if (sortIndex == 2) {
+				thirdEl = en.getProperties();
+			}
+			if (sortIndex == 3) {
+				furthEl = en.getProperties();
+			}
+			totalOut += balls;
+			sortIndex++;
 		}
 		if (tainoKey.equals("584")) {
 			map = new HashMap<String, Object>();
-			map.put("taiNo", "584");
-			map.put("outTotal", outTotal);
+			// map.put("taiNo", "584");
+			map.put("totalOut", totalOut);
+			map.putAll(firstEl);
+			map.putAll(CommonUtil.convertKeyOfMap(secondEl, "1"));
+			map.putAll(CommonUtil.convertKeyOfMap(thirdEl, "2"));
+			map.putAll(CommonUtil.convertKeyOfMap(furthEl, "3"));
 			listMap.add(map);
 		}
+
 		Comparator<Map<String, Object>> mapComparator = new Comparator<Map<String, Object>>() {
 			public int compare(Map<String, Object> m1, Map<String, Object> m2) {
-				int no1 = CommonUtil.ObejctToInt(m1.get("outTotal"));
-				int no2 = CommonUtil.ObejctToInt(m2.get("outTotal"));
+				int no1 = CommonUtil.ObejctToInt(m1.get("totalOut"));
+				int no2 = CommonUtil.ObejctToInt(m2.get("totalOut"));
 				if (no1 > no2) {
 					return -1;
 				} else if (no1 == no2) {
@@ -109,11 +141,11 @@ public class GetPiaBallsOfDay extends HttpServlet {
 		Collections.sort(listMap, mapComparator);
 		int index = 1;
 		List<Map<String, Object>> listMap1 = new ArrayList<Map<String, Object>>();
-		for(Map<String, Object> m : listMap){
+		for (Map<String, Object> m : listMap) {
 			map = new HashMap<String, Object>();
 			map.putAll(m);
-			map.put("rank",CommonUtil.ObejctToString(index));
-			index ++;
+			map.put("rank", CommonUtil.ObejctToString(index));
+			index++;
 			listMap1.add(map);
 		}
 		return listMap1;

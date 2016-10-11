@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -65,7 +66,13 @@ public class CommonUtil {
 
 		return alist;
 	}
-
+	public static Map<String, Object> convertKeyOfMap(Map<String, Object> map,String prefix) {
+		Map<String, Object> map1 = new HashMap<String, Object>();
+		for (String key :map.keySet()){
+			map1.put(key + prefix , map.get(key));
+		}
+		return map1;
+	}
 	public static String addDay(String playDate, int add) {
 
 		DateFormat df = new SimpleDateFormat("yyyyMMdd");

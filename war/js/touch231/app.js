@@ -44,6 +44,9 @@ Ext.define('piaDataModel', {
 			name : 'totalOut',
 			type : 'integer'
 		}, {
+			name : 'totalOutBefore',
+			type : 'integer'
+		}, {
 			name : 'outMax',
 			type : 'integer'
 		}, {
@@ -76,6 +79,15 @@ Ext.define('piaDataModel', {
 		}, {
 			name : 'ballOutput3',
 			type : 'integer'
+		}, {
+			name : 'bonusCount4',
+			type : 'integer'
+		}, {
+			name : 'rate4',
+			type : 'integer'
+		}, {
+			name : 'ballOutput4',
+			type : 'integer'
 		} ]
 	}
 });
@@ -101,13 +113,39 @@ Ext.application({
 		}
 		return dataOfPlayDate;
 	},
+	getDataOfSortKind: function() {
+		var dataOfSortKind = [];
+		var el = {};
+		el.value = 'ballOutput';
+		el.text = '本日出玉';
+		dataOfSortKind.push(el);
+		el = {};
+		el.value = 'totalOut';
+		el.text = '本日差玉';
+		dataOfSortKind.push(el);
+		el = {};
+		el.value = 'rate';
+		el.text = '本日確率';
+		dataOfSortKind.push(el);
+		el = {};
+		el.value = 'totalOutBefore';
+		el.text = '前日差玉';
+		dataOfSortKind.push(el);
+		el = {};
+		el.value = 'rate1';
+		el.text = '前日確率';
+		dataOfSortKind.push(el);
+		
+		return dataOfSortKind;
+	},
 
 	getItemTplForBall : function() {
 		return [
 				'<div>',
-				'<span style="color:#000099;font-size:15px; width: 60px;display: inline-block;">No.{rank}</span>',
-				'<span style="color:#000099;font-size:15px;width: 90px;display: inline-block;">台番 : {taiNo}</span>',
-				'<span style="color:#000099;font-size:15px;width: 120px;display: inline-block;">差玉  ： {totalOut}</span><br/>',
+				'<span style="color:#000099;font-size:15px; width: 40px;display: inline-block;">No.{rank}</span><br/>',
+				'<span style="color:#000099;font-size:x-small;width: 60px;display: inline-block;">台番 : {taiNo}</span>',
+				'<span style="color:#000099;font-size:x-small;width: 90px;display: inline-block;">差玉  ： {totalOut}</span>',
+				'<span style="color:#000099;font-size:x-small;width: 90px;display: inline-block;">前差  ： {totalOutBefore}</span><br/>',
 				
 				'<span style="color:#000099;font-size:x-small;width: 60px;display: inline-block;">本日</span>',
 				'<span style="color:#006600;font-size:x-small;width: 70px;display: inline-block;">当たり ：{bonusCount}</span>',
@@ -127,7 +165,13 @@ Ext.application({
 				'<span style="color:#000099;font-size:x-small;width: 60px;display: inline-block;">3日前</span>',
 				'<span style="color:#006600;font-size:x-small;width: 70px;display: inline-block;">当たり ：{bonusCount3}</span>',
 				'<span style="color:#ff0066;font-size:x-small;width: 70px;display: inline-block;">確率 ：{rate3}</span>',
-				'<span style="color: #660066;font-size:x-small;width: 70px;display: inline-block;">出玉 ：{ballOutput3}</span>',
+				'<span style="color: #660066;font-size:x-small;width: 70px;display: inline-block;">出玉 ：{ballOutput3}</span><br/>',
+				
+				'<span style="color:#000099;font-size:x-small;width: 60px;display: inline-block;">4日前</span>',
+				'<span style="color:#006600;font-size:x-small;width: 70px;display: inline-block;">当たり ：{bonusCount4}</span>',
+				'<span style="color:#ff0066;font-size:x-small;width: 70px;display: inline-block;">確率 ：{rate4}</span>',
+				'<span style="color: #660066;font-size:x-small;width: 70px;display: inline-block;">出玉 ：{ballOutput4}</span>',
+				
 				'</div>' ].join("");
 	},
 	getItemTpl : function() {
@@ -496,8 +540,8 @@ Ext.application({
 					type : "json",
 					rootProperty : "root"
 				}
-			},
-			autoLoad : true
+			}/*,
+			autoLoad : true*/
 		});
 		// 日付別
 		var playdateSelectField = Ext.create('Ext.field.Select', {
@@ -506,7 +550,7 @@ Ext.application({
 			displayField : 'text',
 			store : {
 				data : this.getPlayDate()
-			},
+			}/*,
 			listeners : {
 				change : function(selectf, newValue, oldValue, eOpts) {
 					storeForSaTaMa.load({
@@ -515,9 +559,29 @@ Ext.application({
 						}
 					});
 				}
+			}*/
+		});
+		var sortSelectField = Ext.create('Ext.field.Select', {
+			label : 'SORT',
+			valueField : 'value',
+			displayField : 'text',
+			store : {
+				data : this.getDataOfSortKind()
 			}
 		});
-
+		// 検索ボタン
+		var searchButtonForm1 = Ext.create('Ext.Button', {
+			text : '検索',
+			ui : 'confirm',
+			handler : function() {
+				storeForSaTaMa.load({
+					params : {
+						playDate : playdateSelectField.getValue(),
+						sortKind:sortSelectField.getValue()
+					}
+				});
+			}
+		});
 		var listForSaTaMa = Ext.create('Ext.List', {
 			itemTpl : this.getItemTplForBall(),
 			store : storeForSaTaMa,
@@ -546,7 +610,7 @@ Ext.application({
 					direction : 'horizontal',
 					directionLock : true
 				},
-				items : [ playdateSelectField ]
+				items : [ playdateSelectField,sortSelectField,searchButtonForm1 ]
 			}, listForSaTaMa ]
 		});
 		// ################################ 一覧日別 ListPanel Start

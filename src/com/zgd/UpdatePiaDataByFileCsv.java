@@ -18,7 +18,7 @@ import com.google.appengine.api.datastore.Entity;
 import com.zgd.common.CommonUtil;
 
 @SuppressWarnings("serial")
-public class Serve extends HttpServlet {
+public class UpdatePiaDataByFileCsv extends HttpServlet {
 
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {

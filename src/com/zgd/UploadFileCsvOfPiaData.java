@@ -14,7 +14,7 @@ import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 
 @SuppressWarnings("serial")
-public class Upload extends HttpServlet {
+public class UploadFileCsvOfPiaData extends HttpServlet {
     private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 
     @Override
@@ -27,7 +27,7 @@ public class Upload extends HttpServlet {
         if (blobKeys == null || blobKeys.isEmpty()) {
             res.sendRedirect("/");
         } else {
-            res.sendRedirect("/serve?blob-key=" + blobKeys.get(0).getKeyString());
+            res.sendRedirect("/UpdatePiaDataByFileCsv?blob-key=" + blobKeys.get(0).getKeyString());
         }
     }
 }

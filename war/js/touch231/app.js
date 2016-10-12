@@ -447,6 +447,28 @@ Ext.application({
 							duration : 300
 						}
 					}
+				},  {
+					type : 'line',
+					xField : 'playDateN',
+					yField : 'rate',
+					title : '確率',
+					style : {
+						stroke : '#000000',
+						lineWidth : 2
+					},
+					highlightCfg : {
+						scale : 2
+					},
+					marker : {
+						type : 'circle',
+						stroke : '#0d1f96',
+						fill : '#115fa6',
+						lineWidth : 1,
+						radius : 2,
+						fx : {
+							duration : 300
+						}
+					}
 				}, {
 					type : 'bar',
 					xField : 'playDateN',

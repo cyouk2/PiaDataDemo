@@ -3,7 +3,6 @@ package com.zgd;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +25,7 @@ import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
 import com.zgd.common.ComRootResult;
 import com.zgd.common.CommonUtil;
+import com.zgd.common.PiaComparator;
 
 @SuppressWarnings("serial")
 public class GetPiaBallsOfDay extends HttpServlet {
@@ -140,84 +140,8 @@ public class GetPiaBallsOfDay extends HttpServlet {
 			map.putAll(CommonUtil.convertKeyOfMap(fifthEl, "4"));
 			listMap.add(map);
 		}
-
-		Comparator<Map<String, Object>> mapComparator = new Comparator<Map<String, Object>>() {
-			public int compare(Map<String, Object> m1, Map<String, Object> m2) {
-				int no1 = CommonUtil.ObejctToInt(m1.get("totalOut"));
-				int no2 = CommonUtil.ObejctToInt(m2.get("totalOut"));
-				if (no1 > no2) {
-					return -1;
-				} else if (no1 == no2) {
-					return 0;
-				} else {
-					return 1;
-				}
-			}
-		};
-
-		Comparator<Map<String, Object>> mapComparatorBefore = new Comparator<Map<String, Object>>() {
-			public int compare(Map<String, Object> m1, Map<String, Object> m2) {
-				int no1 = CommonUtil.ObejctToInt(m1.get("totalOutBefore"));
-				int no2 = CommonUtil.ObejctToInt(m2.get("totalOutBefore"));
-				if (no1 > no2) {
-					return -1;
-				} else if (no1 == no2) {
-					return 0;
-				} else {
-					return 1;
-				}
-			}
-		};
-		Comparator<Map<String, Object>> mapComparatorrate = new Comparator<Map<String, Object>>() {
-			public int compare(Map<String, Object> m1, Map<String, Object> m2) {
-				int no1 = CommonUtil.ObejctToInt(m1.get("rate"));
-				int no2 = CommonUtil.ObejctToInt(m2.get("rate"));
-				if (no1 > no2) {
-					return -1;
-				} else if (no1 == no2) {
-					return 0;
-				} else {
-					return 1;
-				}
-			}
-		};
-		Comparator<Map<String, Object>> mapComparatorrate1 = new Comparator<Map<String, Object>>() {
-			public int compare(Map<String, Object> m1, Map<String, Object> m2) {
-				int no1 = CommonUtil.ObejctToInt(m1.get("rate1"));
-				int no2 = CommonUtil.ObejctToInt(m2.get("rate1"));
-				if (no1 > no2) {
-					return -1;
-				} else if (no1 == no2) {
-					return 0;
-				} else {
-					return 1;
-				}
-			}
-		};
-		Comparator<Map<String, Object>> mapComparatorballOutput = new Comparator<Map<String, Object>>() {
-			public int compare(Map<String, Object> m1, Map<String, Object> m2) {
-				int no1 = CommonUtil.ObejctToInt(m1.get("ballOutput"));
-				int no2 = CommonUtil.ObejctToInt(m2.get("ballOutput"));
-				if (no1 > no2) {
-					return -1;
-				} else if (no1 == no2) {
-					return 0;
-				} else {
-					return 1;
-				}
-			}
-		};
-		if (sortKind.equals("totalOut")) {
-			Collections.sort(listMap, mapComparator);
-		} else if (sortKind.equals("totalOutBefore")) {
-			Collections.sort(listMap, mapComparatorBefore);
-		} else if (sortKind.equals("rate")) {
-			Collections.sort(listMap, mapComparatorrate);
-		} else if (sortKind.equals("rate1")) {
-			Collections.sort(listMap, mapComparatorrate1);
-		} else if (sortKind.equals("ballOutput")) {
-			Collections.sort(listMap, mapComparatorballOutput);
-		}
+		
+		Collections.sort(listMap, new PiaComparator(sortKind));
 		int index = 1;
 		List<Map<String, Object>> listMap1 = new ArrayList<Map<String, Object>>();
 		for (Map<String, Object> m : listMap) {

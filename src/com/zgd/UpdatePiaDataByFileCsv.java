@@ -55,7 +55,13 @@ public class UpdatePiaDataByFileCsv extends HttpServlet {
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		Entity employee = new Entity(tableName);
 		for (int i = 0; i < a.length; i++) {
-			employee.setProperty(a[i].trim(), CommonUtil.ObejctToInt(CommonUtil.ObejctToString(line[i])));
+			String key = a[i].trim();
+			if ("TAINO,PLAYDATE,GROUPNAME".indexOf(key.toUpperCase()) != -1) {
+				employee.setProperty(key, CommonUtil.ObejctToString(line[i]));
+			} else {
+				employee.setProperty(key, CommonUtil.ObejctToInt(CommonUtil.ObejctToString(line[i])));
+			}
+
 		}
 
 		datastore.put(employee);

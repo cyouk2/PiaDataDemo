@@ -425,13 +425,13 @@ Ext.application({
 				legend : {
 					position : "bottom"
 				},
-				series : [{
+				series : [ {
 					type : 'line',
 					xField : 'playDateN',
-					yField : 'rate',
-					title : '確率',
+					yField : 'rateN',
+					title : '100000/確率',
 					style : {
-						stroke : '#000000',
+						stroke : '#993399',
 						lineWidth : 2
 					},
 					highlightCfg : {

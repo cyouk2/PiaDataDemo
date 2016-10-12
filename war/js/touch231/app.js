@@ -425,29 +425,7 @@ Ext.application({
 				legend : {
 					position : "bottom"
 				},
-				series : [ {
-					type : 'line',
-					xField : 'playDateN',
-					yField : 'rateN',
-					title : '10000/確率',
-					style : {
-						stroke : '#993399',
-						lineWidth : 2
-					},
-					highlightCfg : {
-						scale : 2
-					},
-					marker : {
-						type : 'circle',
-						stroke : '#0d1f96',
-						fill : '#115fa6',
-						lineWidth : 1,
-						radius : 2,
-						fx : {
-							duration : 300
-						}
-					}
-				},  {
+				series : [{
 					type : 'line',
 					xField : 'playDateN',
 					yField : 'rate',

@@ -8,11 +8,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.appengine.api.blobstore.BlobInfo;
+import com.google.appengine.api.blobstore.BlobInfoFactory;
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreInputStream;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.zgd.common.CommonUtil;
 
 @SuppressWarnings("serial")
 public class Serve extends HttpServlet {
@@ -22,30 +25,39 @@ public class Serve extends HttpServlet {
 
 		String keyString = req.getParameter("blob-key");
 		BlobKey blobkey = new BlobKey(keyString);
+
+		BlobInfoFactory fac = new BlobInfoFactory();
+		BlobInfo fileInfo = fac.loadBlobInfo(blobkey);
+		String fileName = fileInfo.getFilename();
+		String tableName = fileName.toUpperCase().split(".CSV")[0];
 		BufferedReader reader = new BufferedReader(new InputStreamReader(new BlobstoreInputStream(blobkey)));
 		String line = null;
-		
-		
-		//String columns = "playDate,taiNo,bonusCount,rate,ballOutput,ballInput,totalOut,totalOutBefore,rateN,bonusCountN,ballOutputN,playDateN,totalOutN";
-		String columns ="playDate,taiNo,rate,bonusCount,ballOutput";
-		String[] a = columns.split(",");
+
+		String[] columns = {};
+		int rowno = 0;
 		while ((line = reader.readLine()) != null) {
-			// Do whatever you like with the line
-			savepidata(line.split(","), a);
+
+			if (rowno == 0) {
+				columns = line.split(",");
+			} else {
+				savepidata(line.split(","), columns, tableName);
+			}
+
+			rowno++;
 		}
 		reader.close();
 		res.setContentType("text/plain");
 		res.getWriter().println("OK");
 	}
-	
-	private void savepidata(String[] line,String[] a){
-		
+
+	private void savepidata(String[] line, String[] a, String tableName) {
+
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-		Entity employee = new Entity("PIA_DATA");
-		for(int i = 0; i < a.length; i++){
-			employee.setProperty(a[i], line[i]);
+		Entity employee = new Entity(tableName);
+		for (int i = 0; i < a.length; i++) {
+			employee.setProperty(a[i].trim(), CommonUtil.ObejctToInt(CommonUtil.ObejctToString(line[i])));
 		}
-		
+
 		datastore.put(employee);
 	}
 }

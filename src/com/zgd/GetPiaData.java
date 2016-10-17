@@ -60,7 +60,7 @@ public class GetPiaData extends HttpServlet {
 			list.add(new FilterPredicate("taiNo", FilterOperator.EQUAL, taiNo));
 		}
 	
-		Query q = new Query("PIA_DATA").addSort("playDate", SortDirection.ASCENDING);
+		Query q = new Query("PIA_DATA_INFO").addSort("playDate", SortDirection.ASCENDING);
 		
 		if (list.size() > 1) {
 			CompositeFilter filter = new CompositeFilter(CompositeFilterOperator.AND, list);

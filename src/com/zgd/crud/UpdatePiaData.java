@@ -71,7 +71,7 @@ public class UpdatePiaData extends HttpServlet {
 			Transaction txn = datastore.beginTransaction();
 
 			try {
-				Key employeeKey = KeyFactory.createKey("PIA_DATA", Long.parseLong(id));
+				Key employeeKey = KeyFactory.createKey("PIA_DATA_INFO", Long.parseLong(id));
 				Entity employee = datastore.get(employeeKey);
 				employee.setProperty("playDate", playDate);
 				employee.setProperty("taiNo", taiNo);

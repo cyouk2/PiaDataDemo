@@ -28,7 +28,7 @@ public class SendMailOfPiaData extends HttpServlet {
 
 		try {
 			
-			Query q = new Query("PIA_DATA").addSort("playDate", SortDirection.ASCENDING);
+			Query q = new Query("PIA_DATA_INFO").addSort("playDate", SortDirection.ASCENDING);
 			PreparedQuery pq = datastore.prepare(q);
 			String strMsg = "playDate,taiNo,rate,bonusCount,ballOutput*";
 			for (Entity en : pq.asIterable()) {

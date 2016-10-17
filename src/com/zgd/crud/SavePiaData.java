@@ -74,7 +74,7 @@ public class SavePiaData extends HttpServlet {
 			try {
 
 				DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-				Entity employee = new Entity("PIA_DATA");
+				Entity employee = new Entity("PIA_DATA_INFO");
 				employee.setProperty("playDate", playDate);
 				employee.setProperty("taiNo", taiNo);
 				employee.setProperty("bonusCount", bonusCountNo);

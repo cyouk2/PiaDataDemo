@@ -22,7 +22,7 @@ public class DeletePiaData extends HttpServlet {
 		
 		try {
 			DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-			Key employeeKeys = KeyFactory.createKey("PIA_DATA", Long.parseLong(id));
+			Key employeeKeys = KeyFactory.createKey("PIA_DATA_INFO", Long.parseLong(id));
 			datastore.delete(employeeKeys);
 			
 			re.setSuccess(true);

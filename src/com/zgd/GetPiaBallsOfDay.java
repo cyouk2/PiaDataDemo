@@ -59,7 +59,7 @@ public class GetPiaBallsOfDay extends HttpServlet {
 		}
 		list.add(new FilterPredicate("taiNo", FilterOperator.IN, etiqueta));
 		// 検索条件設定
-		Query q = new Query("PIA_DATA").addSort("taiNo", SortDirection.ASCENDING).addSort("playDate",
+		Query q = new Query("PIA_DATA_INFO").addSort("taiNo", SortDirection.ASCENDING).addSort("playDate",
 				SortDirection.DESCENDING);
 		if (list.size() == 1) {
 			q.setFilter(list.get(0));

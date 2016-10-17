@@ -46,7 +46,7 @@ public class GetPiaDataForChart extends HttpServlet {
 		List<Map<String, Object>> listMap = new ArrayList<Map<String, Object>>();
 
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-		Query q = new Query("PIA_DATA").setFilter(new FilterPredicate("taiNo", FilterOperator.EQUAL, taiNo))
+		Query q = new Query("PIA_DATA_INFO").setFilter(new FilterPredicate("taiNo", FilterOperator.EQUAL, taiNo))
 				.addSort("playDate", SortDirection.ASCENDING);
 		PreparedQuery pq = datastore.prepare(q);
 		int totalOut = 0;

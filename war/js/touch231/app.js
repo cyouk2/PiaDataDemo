@@ -142,8 +142,8 @@ Ext.application({
 			getItemTplForBall : function() {
 				return [
 						'<div>',
-						'<span style="color:#000099;font-size:15px; width: 40px;display: inline-block;">No.{rank}</span><br/>',
-						'<span style="color:#000099;font-size:x-small;width: 60px;display: inline-block;">台番 : {taiNo}</span>',
+						'<span style="color:#000099;font-size:15px; width: 50px;display: inline-block;">No.{rank}</span>',
+						'<span style="color:#000099;font-size:15px; width: 150px;display: inline-block;">台番 : {taiNo}</span><br/>',
 						'<span style="color:#000099;font-size:x-small;width: 90px;display: inline-block;">差玉  ： {totalOut}</span>',
 						'<span style="color:#000099;font-size:x-small;width: 90px;display: inline-block;">前差  ： {totalOutBefore}</span><br/>',
 

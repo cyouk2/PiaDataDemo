@@ -82,7 +82,7 @@ public class GetPiaDataForChart extends HttpServlet {
 			listMap.put("rateN", 0);
 		
 		}else {
-			listMap.put("rateN", (int)(100000 / rate));
+			listMap.put("rateN", (int)(10000 / rate));
 		}
 
 		listMap.put("bonusCountN", bonusCount * 10);

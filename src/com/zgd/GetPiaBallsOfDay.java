@@ -33,8 +33,15 @@ public class GetPiaBallsOfDay extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		String playDate = CommonUtil.ObejctToString(req.getParameter("playDate"));
 		String sortKind = CommonUtil.ObejctToString(req.getParameter("sortKind"));
-
-		List<Map<String, Object>> list = getBallOutUntilSomeDay(playDate, sortKind);
+		
+		String strUrl = req.getRequestURL().toString();
+		String startTaino = "557";
+		String endTaino = "584";
+		if(strUrl.indexOf("piadatatest") > 0){
+			startTaino = "683";
+			endTaino = "689";
+		}
+		List<Map<String, Object>> list = getBallOutUntilSomeDay(playDate, sortKind,startTaino,endTaino);
 
 		Gson gson = new Gson();
 		ComRootResult re = new ComRootResult();
@@ -45,11 +52,11 @@ public class GetPiaBallsOfDay extends HttpServlet {
 		resp.getWriter().println(gson.toJson(re));
 	}
 
-	public static List<Map<String, Object>> getBallOutUntilSomeDay(String playDate, String sortKind) {
+	public static List<Map<String, Object>> getBallOutUntilSomeDay(String playDate, String sortKind, String startTaino, String endTaino) {
 
 		// 検索条件
 		List<String> etiqueta = new ArrayList<String>();
-		for (int i = 557; i <= 584; i++) {
+		for (int i = CommonUtil.ObejctToInt(startTaino); i <= CommonUtil.ObejctToInt(endTaino); i++) {
 			etiqueta.add(CommonUtil.ObejctToString(i));
 		}
 
@@ -76,7 +83,7 @@ public class GetPiaBallsOfDay extends HttpServlet {
 		int totalOut = 0;
 
 		int totalOutBefore = 0;
-		String tainoKey = "557";
+		String tainoKey = startTaino;
 
 		Map<String, Object> firstEl = new HashMap<String, Object>();
 		Map<String, Object> secondEl = new HashMap<String, Object>();
@@ -129,7 +136,7 @@ public class GetPiaBallsOfDay extends HttpServlet {
 			totalOutBefore += ballsBefore;
 			sortIndex++;
 		}
-		if (tainoKey.equals("584")) {
+		if (tainoKey.equals(endTaino)) {
 			map = new HashMap<String, Object>();
 			map.put("totalOutBefore", totalOutBefore);
 			map.put("totalOut", totalOut);

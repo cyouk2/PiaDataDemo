@@ -15,19 +15,24 @@ import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 
 @SuppressWarnings("serial")
 public class UploadFileCsvOfPiaData extends HttpServlet {
-    private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+	private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 
-    @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse res)
-        throws ServletException, IOException {
+	@Override
+	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		// 処理区分
+		String hyouka = req.getParameter("hyouka");
+		Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(req);
+		List<BlobKey> blobKeys = blobs.get("myFile");
 
-        Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(req);
-        List<BlobKey> blobKeys = blobs.get("myFile");
-
-        if (blobKeys == null || blobKeys.isEmpty()) {
-            res.sendRedirect("/");
-        } else {
-            res.sendRedirect("/UpdatePiaDataByFileCsv?blob-key=" + blobKeys.get(0).getKeyString());
-        }
-    }
+		if (blobKeys == null || blobKeys.isEmpty()) {
+			res.sendRedirect("/index.jsp");
+		} else {
+			if ("uploadFileOnly".equals(hyouka)) {
+				res.setContentType("text/plain");
+				res.getWriter().println("UploadFileOnly OK");
+			} else {
+				res.sendRedirect("/UpdatePiaDataByFileCsv?blob-key=" + blobKeys.get(0).getKeyString());
+			}
+		}
+	}
 }

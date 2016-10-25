@@ -47,7 +47,7 @@ public class UpdatePiaDataByFileCsv extends HttpServlet {
 		}
 		reader.close();
 		res.setContentType("text/plain");
-		res.getWriter().println("OK");
+		res.getWriter().println("Update Data OK");
 	}
 
 	private void savepidata(String[] line, String[] a, String tableName) {

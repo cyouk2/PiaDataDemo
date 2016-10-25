@@ -9,10 +9,12 @@
 <title>Upload Test</title>
 </head>
 <body>
-	<span>playDate,taiNo,rate,bonusCount,ballOutput</span>
-	<br/>
 	<form action="<%=blobstoreService.createUploadUrl("/UploadFileCsvOfPiaData")%>" method="post" enctype="multipart/form-data">
+		<input type="radio" name="hyouka" value="uploadFileOnly" checked="checked">uploadFileOnly
+		<input type="radio" name="hyouka" value="uploadAndUpdateData">uploadAndUpdateData
+		<br/><br/><br/>
 		<input type="file" name="myFile">
+		<br/><br/><br/>
 		<input type="submit" value="Submit">
 	</form>
 </body>

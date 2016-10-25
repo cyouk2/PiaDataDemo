@@ -33,10 +33,8 @@ public class GetPiaData extends HttpServlet {
 		String playDate = req.getParameter("playDate");
 		String taiNo = req.getParameter("taiNo");
 
-		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-		if (!CommonUtil.IsNullOrEmpty(taiNo) || !CommonUtil.IsNullOrEmpty(playDate)) {
-			list = getTallestPeople(playDate, taiNo);
-		}
+		List<Map<String, Object>> list = getTallestPeople(playDate, taiNo);
+
 		Gson gson = new Gson();
 		ComRootResult re = new ComRootResult();
 		re.setSuccess(true);

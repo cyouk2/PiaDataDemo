@@ -35,8 +35,8 @@ public class GetPiaBallsOfDay extends HttpServlet {
 		String sortKind = CommonUtil.ObejctToString(req.getParameter("sortKind"));
 		
 		String strUrl = req.getRequestURL().toString();
-		String startTaino = "557";
-		String endTaino = "584";
+		String startTaino = "683";
+		String endTaino = "696";
 		if(strUrl.indexOf("piadatatest") > 0){
 			startTaino = "683";
 			endTaino = "689";
